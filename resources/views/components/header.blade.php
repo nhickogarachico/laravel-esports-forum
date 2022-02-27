@@ -20,7 +20,7 @@
                 </form>
                 <div class="ms-3">
                     <a href="/register" class="btn btn-primary">Register</a>
-                    <a href="/register" class="btn btn-primary">Login</a>
+                    <a href="/login" class="btn btn-primary">Login</a>
                 </div>
             </div>  
         </div>
