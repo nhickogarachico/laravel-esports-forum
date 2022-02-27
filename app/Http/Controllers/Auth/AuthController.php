@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function showLoginView()
-    
+
     {
         return view('pages.login');
     }
@@ -20,13 +20,23 @@ class AuthController extends Controller
         $credential = filter_var($request->validated()['credentials'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $request->merge([$credential => $request->validated()['credentials']]);
 
-        if(Auth::attempt($request->only($credential, 'password')))
-        {
+        if (Auth::attempt($request->only($credential, 'password'))) {
             return redirect('/');
         }
 
         return back()->withErrors([
-            'loginError' =>'Incorrect credentials.'
+            'loginError' => 'Incorrect credentials.'
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

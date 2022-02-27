@@ -16,3 +16,4 @@ Route::prefix('register')->controller(RegisterController::class)->group(function
 
 Route::get('/login', [AuthController::class, 'showLoginView']);
 Route::post('/login', [AuthController::class, 'loginUser']);
+Route::post('/logout', [AuthController::class, 'logout']);
