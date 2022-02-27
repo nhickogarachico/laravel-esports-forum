@@ -7,6 +7,8 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/register', [RegisterController::class, 'showRegisterView']);
 
-
+Route::prefix('register')->controller(RegisterController::class)->group(function() {
+    Route::get('/', 'showRegisterView');
+    Route::post('/', 'registerUser');
+});
