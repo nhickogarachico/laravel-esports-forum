@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,6 @@ Route::post('/login', [AuthController::class, 'loginUser']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/u/{username}', [ProfileController::class, 'showProfileView']);
+
+Route::get('/u/{username}/p/new', [PostController::class, 'showNewPostView']);
+Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);
