@@ -32,4 +32,8 @@ class User extends Authenticatable
         );
     }
 
+    public function fetchUserByUsername($username)
+    {
+        return $this->where('username', $username)->first();
+    }
 }

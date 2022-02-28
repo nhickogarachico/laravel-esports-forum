@@ -25,7 +25,7 @@
                                 {{ Auth::user()->username }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerUserDropdownButton">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="/u/{{Auth::user()->username}}">Profile</a></li>
                                 <form action="/logout" method="POST">
                                     @csrf
                                     <li><button class="dropdown-item" type="submit">Logout</button></li>

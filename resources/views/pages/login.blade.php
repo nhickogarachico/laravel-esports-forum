@@ -1,8 +1,7 @@
 @extends('layouts.main')
 
-@section('title', 'Register')
+@section('title', 'Login')
 
-@section('content')
 @section('content')
     <div class="row">
         <div class="col-6 mx-auto">
@@ -27,4 +26,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>
-        @endsection
+        </div>
+    </div>
+@endsection
