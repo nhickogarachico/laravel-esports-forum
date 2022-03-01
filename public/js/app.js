@@ -5420,7 +5420,8 @@ __webpack_require__.r(__webpack_exports__);
         slug: this.slugifyTitle(this.title),
         user_id: this.userId
       }).then(function (response) {
-        return console.log(response);
+        var slug = response.data.slug;
+        window.location.href = "/p/".concat(slug);
       })["catch"](function (error) {
         return console.log(error.response);
       });
@@ -5539,6 +5540,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     addTag: function addTag(tag) {
       this.selectedCategoryTags.push(tag);
+      this.categoryTagInput = "";
     },
     removeTag: function removeTag(tag) {
       this.selectedCategoryTags.splice(this.selectedCategoryTags.indexOf(tag), 1);

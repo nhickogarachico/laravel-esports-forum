@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -14,10 +15,12 @@ class PostController extends Controller
 {
 
     protected $post;
+    protected $user;
 
-    public function __construct(Post $post)
+    public function __construct(Post $post, User $user)
     {   
         $this->post = $post;
+        $this->user = $user;
     }
 
     public function showNewPostView($username)
@@ -40,5 +43,32 @@ class PostController extends Controller
         {
             $post->tags()->attach($tag["id"]);
         }
+
+        return response()->json([
+            'slug' => $post->slug
+        ]);
+    }
+
+    public function showPostPageView($postSlug)
+    {
+        $post = $this->post->where('slug', $postSlug)->first();
+
+        if($post)
+        {
+            return view('pages.post',[
+                "post" => $post,
+                "user" => $post->user
+            ]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function showUserPostsView($username)
+    {
+        $user = $this->user->fetchUserByUsername($username);
+        return view('pages.user-posts', [
+            'user' => $user,
+        ]);
     }
 }

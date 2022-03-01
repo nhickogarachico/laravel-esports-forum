@@ -25,6 +25,11 @@ class User extends Authenticatable
         'password',
     ];
 
+
+    public function posts() {
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
+    }
+
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -36,4 +41,5 @@ class User extends Authenticatable
     {
         return $this->where('username', $username)->first();
     }
+
 }

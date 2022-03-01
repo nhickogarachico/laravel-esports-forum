@@ -24,3 +24,6 @@ Route::get('/u/{username}', [ProfileController::class, 'showProfileView']);
 
 Route::get('/u/{username}/p/new', [PostController::class, 'showNewPostView']);
 Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);
+Route::get('/u/{username}/p', [PostController::class, 'showUserPostsView']);
+
+Route::get('/p/{postSlug}', [PostController::class, 'showPostPageView']);

@@ -59,8 +59,8 @@ export default {
     },
     selectedCategoryTags: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
   data() {
     return {
@@ -100,6 +100,7 @@ export default {
     },
     addTag: function (tag) {
       this.selectedCategoryTags.push(tag);
+      this.categoryTagInput = "";
     },
 
     removeTag: function (tag) {
@@ -140,7 +141,7 @@ export default {
 .tag {
   cursor: pointer;
 }
-    
+
 .tag-text {
   border: 0;
   font-size: 0.75em;

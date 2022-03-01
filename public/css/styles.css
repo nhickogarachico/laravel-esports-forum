@@ -1,0 +1,9 @@
+.avatar-small {
+    height: 60px;
+    width: 60px;
+}
+
+.button-in-stretched-link {
+    position: relative;
+    z-index: 99;
+}

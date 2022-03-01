@@ -21,7 +21,11 @@ class Post extends Model
     public function tags() {
         return $this->belongsToMany(Tag::class);
     }
-    
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     // Mutator to add some random characters at the end of the slug to make it unique
     protected function slug() : Attribute
     {

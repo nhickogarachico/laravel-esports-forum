@@ -59,7 +59,10 @@ export default {
           tags: this.selectedCategoryTags,
           slug: this.slugifyTitle(this.title),
           user_id: this.userId
-      }).then((response) => console.log(response)).catch((error) => console.log(error.response))
+      }).then((response) => {
+        const {slug} = response.data;
+        window.location.href = `/p/${slug}`;
+      }).catch((error) => console.log(error.response))
     },
   },
 };

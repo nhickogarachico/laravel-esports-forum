@@ -22,9 +22,10 @@ class ProfileController extends Controller
         $user = $this->user->fetchUserByUsername($username);
         if ($user) {
             return view('pages.profile', [
-                'user' => $user
+                'user' => $user,
             ]);
         }
+
 
         return abort(404);
     }
