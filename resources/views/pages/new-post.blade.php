@@ -24,6 +24,7 @@
             <div class="mb-2">
                 <textarea name="content" class="form-control" placeholder="Share your thoughts."></textarea>
             </div>
+            <tags-input :category-tags="{{$tags}}"></tags-input>
             <button type="submit" class="btn btn-primary">Post</button>
         </form>
     </div>

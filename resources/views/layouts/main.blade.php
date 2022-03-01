@@ -15,10 +15,12 @@
 </head>
 
 <body>
-    <x-header></x-header>
-    <main class="container">
-        @yield('content')
-    </main>
+    <div id="app">
+        <x-header></x-header>
+        <main class="container">
+            @yield('content')
+        </main>
+    </div>
     <script src="/js/app.js"></script>
 </body>
 
