@@ -57,13 +57,16 @@ export default {
       type: Array,
       default: [],
     },
+    selectedCategoryTags: {
+      type: Array,
+      default: []
+    }
   },
   data() {
     return {
       isTagDisplayed: false,
       categoryTagInput: "",
       searchedCategoryTags: this.categoryTags,
-      selectedCategoryTags: [],
     };
   },
   computed: {
@@ -137,7 +140,7 @@ export default {
 .tag {
   cursor: pointer;
 }
-
+    
 .tag-text {
   border: 0;
   font-size: 0.75em;
