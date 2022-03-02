@@ -20,8 +20,9 @@ Route::get('/login', [AuthController::class, 'showLoginView'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::get('/u/{username}', [ProfileController::class, 'showProfileView']);
-Route::get('/u/{username}/edit', [ProfileController::class, 'showEditProfileView']);
+Route::get('/u/{username}', [ProfileController::class, 'showProfileView'])->name("user-profile");
+Route::get('/u/{username}/edit', [ProfileController::class, 'showEditProfileView'])->middleware('auth');
+Route::put('/u/{username}/edit', [ProfileController::class, 'editUserProfile'])->middleware('auth');
 
 Route::get('/u/{username}/p/new', [PostController::class, 'showNewPostView']);
 Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);

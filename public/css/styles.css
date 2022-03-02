@@ -1,6 +1,19 @@
+.avatar-xs {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+}
+
 .avatar-small {
     height: 60px;
     width: 60px;
+    object-fit: cover;
+}
+
+.avatar-profile {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
 }
 
 .button-in-stretched-link {

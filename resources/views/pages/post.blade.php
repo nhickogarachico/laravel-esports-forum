@@ -7,7 +7,7 @@
         <div class="col-11 mx-auto d-flex">
             <div>
                 <a href="/u/{{ $user->username }}"><img
-                        src="{{ $user->avatar ? $user->avatar : '/images/default_profile.png' }}"
+                        src="{{ $user->avatar}}"
                         alt="{{ $user->avatar }} avatar" class="rounded-circle avatar-small" /></a>
             </div>
             <div>

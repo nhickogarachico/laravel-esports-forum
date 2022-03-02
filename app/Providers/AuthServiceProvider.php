@@ -37,5 +37,10 @@ class AuthServiceProvider extends ServiceProvider
         {
             return $post->user->id === $user->id;
         });
+
+        Gate::define('edit-profile', function(User $currentUser, User $profileUser) {
+            return $profileUser->id === $currentUser->id;
+        });
+
     }
 }

@@ -1,6 +1,6 @@
 <div class="card mb-2">
     <div class="card-header">
-        <img src="/images/default_profile.png" alt="{{ $user->username }} avatar">
+        <img src="{{$user->avatar}}" alt="{{ $user->username }} avatar" class="avatar-profile">
     </div>
     <div class="card-body">
         <div>
@@ -12,7 +12,7 @@
                         <i class="fas fa-gear"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileSettingsDropdown">
-                        <li><a class="dropdown-item" href="/u/{{ Auth::user()->username }}">Edit Profile</a>
+                        <li><a class="dropdown-item" href="/u/{{ Auth::user()->username }}/edit">Edit Profile</a>
                         </li>
                         <li><a class="dropdown-item" href="/u/{{ Auth::user()->username }}">Account
                                 Settings</a>

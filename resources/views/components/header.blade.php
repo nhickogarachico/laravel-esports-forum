@@ -20,6 +20,7 @@
                 @if (Auth::check())
                     <a href="/u/{{ Auth::user()->username }}/p/new" class="btn btn-primary"><i
                             class="fas fa-plus"></i></a>
+                            <img src="{{Auth::user()->avatar}}" alt="{{Auth::user()->username}} avatar" class="avatar-xs rounded-circle">
                     <div class="ms-3">
 
                         <div class="dropdown">

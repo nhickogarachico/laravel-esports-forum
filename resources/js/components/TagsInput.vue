@@ -35,6 +35,7 @@
         @click="displayMatchedTags"
         ref="tagText"
         :style="{ width: tagTextWidth }"
+        autocomplete="off"
       />
     </div>
     <div class="tag-dropdown" v-if="isTagDisplayed">

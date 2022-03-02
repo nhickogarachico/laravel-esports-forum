@@ -5821,6 +5821,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     categoryTags: {
@@ -29797,7 +29798,7 @@ var render = function () {
           ref: "tagText",
           staticClass: "form-control tag-text d-inline-block",
           style: { width: _vm.tagTextWidth },
-          attrs: { type: "text", name: "tag" },
+          attrs: { type: "text", name: "tag", autocomplete: "off" },
           domProps: { value: _vm.categoryTagInput },
           on: {
             input: [

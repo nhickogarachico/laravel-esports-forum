@@ -24,7 +24,7 @@ class RegisterController extends Controller
 
     public function registerUser(StoreRegisterRequest $request)
     {
-
+        
         $user = $this->user->create($request->validated());
         
         Auth::login($user);
