@@ -7,7 +7,7 @@
         <div class="col-6 mx-auto">
 
             <h1>Edit Profile</h1>
-            <form action="/u/{{$user->username}}/edit" method="POST" enctype="multipart/form-data">
+            <form action="/u/{{ $user->username }}/edit" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 @if ($errors->any())
@@ -19,7 +19,7 @@
                 @endif
                 <div>
                     <img src="{{ $user->avatar }}" alt="{{ $user->username }} avatar" class="avatar-profile">
-                    <input type="file" class="form-control" name="avatar"/>
+                    <input type="file" class="form-control" name="avatar" />
                 </div>
 
                 <div class="mb-2">
@@ -27,7 +27,10 @@
                     <input id="username" type="text" class="form-control" name="username"
                         value="{{ old('username', $user->username) }}" />
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <div>
+                    <a href="/u/{{$user->username}}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </form>
         </div>
     </div>

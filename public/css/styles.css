@@ -20,3 +20,19 @@
     position: relative;
     z-index: 99;
 }
+
+
+/* LIKE BUTTON */
+
+.liked {
+    color: #0d6efd;
+}
+
+.like-button {
+    position: relative;
+    z-index: 100;
+}
+
+.like-button:hover {
+    color: #0d6efd;
+}

@@ -22,12 +22,13 @@
                         @if (Auth::check() && Gate::allows('edit-post', $post))
                             <post-settings-dropdown :post="{{ $post }}" ></post-settings-dropdown>
                         @endif
-
-                    </div>
+                    </div>  
                     <p>Posted {{ $post->created_at->diffForHumans() }}</p>
+                    
                     @foreach ($post->tags as $tag)
                         <span class="badge bg-primary">{{ $tag->tag }}</span>
                     @endforeach
+                    <like-button :post="{{$post}}" :is-liked="{{$post->likes}}"></like-button>
                 </div>
             </div>
         @endforeach

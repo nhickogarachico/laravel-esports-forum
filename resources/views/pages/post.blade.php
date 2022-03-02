@@ -22,6 +22,7 @@
                 @foreach ($post->tags as $tag)
                     <span class="badge bg-primary">{{ $tag->tag }}</span>
                 @endforeach
+                <like-button :post="{{$post}}" :is-liked="{{$post->likes}}"></like-button>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@
     <div class="card-body">
         <div>
             <h4>{{ $user->username }}</h4>
+            <p>Joined {{$user->created_at->diffForHumans()}}</p>
             @if (Auth::check() && Auth::user()->username === $user->username)
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="profileSettingsDropdown"

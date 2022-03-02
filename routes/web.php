@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Like\LikeController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,7 @@ Route::get('/p/{postSlug}', [PostController::class, 'showPostPageView']);
 Route::get('/p/{postSlug}/edit', [PostController::class, 'showEditPostView'])->middleware('auth');
 Route::put('/p/{postSlug}/edit', [PostController::class, 'editPost']);
 Route::delete('/p/{postSlug}/delete', [PostController::class, 'deletePost']);
+
+Route::get('/p/{postSlug}/like', [LikeController::class, 'getPostLikeData']);
+Route::post('/p/{postSlug}/like', [LikeController::class, 'likePost'])->middleware('auth');
+Route::delete('/p/{postSlug}/like', [LikeController::class, 'unlikePost'])->middleware('auth');
