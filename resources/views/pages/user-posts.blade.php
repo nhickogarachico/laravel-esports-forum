@@ -25,7 +25,7 @@
                                 <i class="fas fa-ellipsis"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="postDropdown{{$post->id}}">
-                                <li><a class="dropdown-item" href="#">Edit Post</a>
+                                <li><a class="dropdown-item" href="/p/{{$post->slug}}/edit">Edit Post</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#">Delete Post</a>
                                 </li>

@@ -55,12 +55,17 @@ export default {
   props: {
     categoryTags: {
       type: Array,
-      default: [],
+      default() {
+        return [];
+      },
     },
     selectedCategoryTags: {
       type: Array,
-      default: [],
+      default() {
+        return [];
+      },
     },
+
   },
   data() {
     return {
@@ -85,7 +90,7 @@ export default {
       this.searchedCategoryTags = this.categoryTags.filter((tag) => {
         return (
           tag.tag.match(searchedRegex) &&
-          !this.selectedCategoryTags.includes(tag)
+          !this.selectedCategoryTags.some((currentTag) => currentTag.id == tag.id)
         );
       });
     },

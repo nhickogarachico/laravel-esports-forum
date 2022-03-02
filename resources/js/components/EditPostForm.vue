@@ -1,12 +1,5 @@
 <template>
-  <form @submit.prevent="addPost">
-    <div
-      class="alert alert-danger"
-      role="alert"
-      v-if="validationErrors.title.length"
-    >
-      {{ validationErrors.title[0] }}
-    </div>
+  <form @submit.prevent="editPost">
     <div
       class="alert alert-danger"
       role="alert"
@@ -22,14 +15,7 @@
       {{ validationErrors.selectedCategoryTags[0] }}
     </div>
     <div class="mb-2">
-      <label for="title">Title</label>
-      <input
-        id="title"
-        type="text"
-        class="form-control"
-        name="title"
-        v-model="title"
-      />
+      <h3>{{ post.title }}</h3>
     </div>
     <div class="mb-2">
       <textarea
@@ -43,61 +29,53 @@
       :category-tags="tags"
       :selected-category-tags="selectedCategoryTags"
     ></tags-input>
-    <button type="submit" class="btn btn-primary">Post</button>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 </template>
 
 <script>
 export default {
   props: {
+    post: {
+      type: Object,
+      default: {
+        title: "",
+        content: "",
+        slug: "",
+        user_id: 0,
+      },
+    },
     tags: {
       type: Array,
       default: [],
     },
-    userId: Number,
-    username: String,
+    postTags: {
+      type: Array,
+      default: [],
+    },
   },
   data() {
     return {
-      title: "",
-      content: "",
-      selectedCategoryTags: [],
+      content: this.post.content,
+      selectedCategoryTags: this.postTags,
       validationErrors: {
-        title: [],
         content: [],
         selectedCategoryTags: [],
       },
     };
   },
   methods: {
-    slugifyTitle: function (title) {
-      return title
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, "")
-        .replace(/[\s_-]+/g, "-")
-        .replace(/^-+|-+$/g, "");
-    },
-    addPost: function () {
+    editPost: function () {
       axios
-        .post(`/u/${this.username}/p/new`, {
-          title: this.title,
+        .put(`/p/${this.post.slug}/edit`, {
           content: this.content,
           tags: this.selectedCategoryTags,
-          slug: this.slugifyTitle(this.title),
-          user_id: this.userId,
         })
         .then((response) => {
-          const { slug } = response.data;
-          window.location.href = `/p/${slug}`;
+          window.location.href = `/p/${this.post.slug}`;
         })
         .catch((error) => {
           const { errors } = error.response.data;
-          if (errors.title) {
-            this.validationErrors.title = errors.title;
-          } else {
-            this.validationErrors.title = [];
-          }
           if (errors.content) {
             this.validationErrors.content = errors.content;
           } else {
@@ -109,11 +87,12 @@ export default {
             this.validationErrors.selectedCategoryTags = [];
           }
 
-          this.$nextTick(function() {
-            window.scrollTo(0,0);
-          })
+          this.$nextTick(function () {
+            window.scrollTo(0, 0);
+          });
         });
     },
   },
+  mounted() {},
 };
 </script>

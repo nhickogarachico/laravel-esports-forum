@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,11 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('add-post', function(User $user, String $usernameRoute )
         {
             return $user->username === $usernameRoute;
+        });
+
+        Gate::define('edit-post', function(User $user, Post $post)
+        {
+            return $post->user->id === $user->id;
         });
     }
 }

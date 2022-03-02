@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\EditPostRequest;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Models\Post;
 use App\Models\Tag;
@@ -18,14 +19,14 @@ class PostController extends Controller
     protected $user;
 
     public function __construct(Post $post, User $user)
-    {   
+    {
         $this->post = $post;
         $this->user = $user;
     }
 
     public function showNewPostView($username)
     {
-        if(Gate::allows('add-post', $username)) {
+        if (Gate::allows('add-post', $username)) {
             return view('pages.new-post', [
                 'username' => $username,
                 'tags' => Tag::orderBy('tag')->get()
@@ -33,14 +34,12 @@ class PostController extends Controller
         } else {
             return back();
         }
-        
     }
 
     public function addPost(StorePostRequest $request)
     {
         $post = $this->post->create($request->validated());
-        foreach($request->validated()['tags'] as $tag)
-        {
+        foreach ($request->validated()['tags'] as $tag) {
             $post->tags()->attach($tag["id"]);
         }
 
@@ -53,9 +52,8 @@ class PostController extends Controller
     {
         $post = $this->post->where('slug', $postSlug)->first();
 
-        if($post)
-        {
-            return view('pages.post',[
+        if ($post) {
+            return view('pages.post', [
                 "post" => $post,
                 "user" => $post->user
             ]);
@@ -70,5 +68,34 @@ class PostController extends Controller
         return view('pages.user-posts', [
             'user' => $user,
         ]);
+    }
+
+    public function showEditPostView($postSlug)
+    {
+        $post = $this->post->where('slug', $postSlug)->first();
+
+        if ($post) {
+            if (Gate::allows('edit-post', $post)) {
+                $payload = [
+                    'post' => $post,
+                    'tags' => Tag::orderBy('tag')->get(),
+                    'postTags' => $post->tags
+                ];
+
+                return view('pages.edit-post', $payload);
+            } else {
+                return back();
+            }
+        } else {
+            abort(404);
+        }
+    }
+    public function editPost(EditPostRequest $request, $postSlug)
+    {
+        $post = $this->post->where('slug', $postSlug)->first();
+        $post->content = $request->validated()['content'];
+        $tagsId = array_column($request->validated()['tags'], 'id');
+        $post->tags()->sync($tagsId);
+        $post->save();
     }
 }

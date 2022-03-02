@@ -12,11 +12,11 @@ Route::get('/', function () {
 
 
 Route::prefix('register')->controller(RegisterController::class)->group(function() {
-    Route::get('/', 'showRegisterView');
+    Route::get('/', 'showRegisterView')->name('register');
     Route::post('/', 'registerUser');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginView']);
+Route::get('/login', [AuthController::class, 'showLoginView'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -27,3 +27,5 @@ Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);
 Route::get('/u/{username}/p', [PostController::class, 'showUserPostsView']);
 
 Route::get('/p/{postSlug}', [PostController::class, 'showPostPageView']);
+Route::get('/p/{postSlug}/edit', [PostController::class, 'showEditPostView'])->middleware('auth');
+Route::put('/p/{postSlug}/edit', [PostController::class, 'editPost']);
