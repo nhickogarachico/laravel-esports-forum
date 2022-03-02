@@ -6,8 +6,8 @@
 <div class="row">
     <div class="col-6 mx-auto">
 
-        <h1>Edit Post</h1>
-        <edit-post-form :post="{{$post}}" :tags="{{$tags}}" :post-tags="{{$postTags}}"></edit-post-form>    
+        <h1>Edit Profile</h1>
+
     </div>
 </div>
 @endsection

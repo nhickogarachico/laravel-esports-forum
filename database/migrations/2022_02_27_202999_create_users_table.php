@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->foreignId('role_id')->default(1);
+            $table->foreignId('role_id')->constrained()->default(1);
             $table->timestamps();
         });
     }

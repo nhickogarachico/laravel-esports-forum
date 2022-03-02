@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\DeletePostRequest;
 use App\Http\Requests\Post\EditPostRequest;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Models\Post;
@@ -97,5 +98,19 @@ class PostController extends Controller
         $tagsId = array_column($request->validated()['tags'], 'id');
         $post->tags()->sync($tagsId);
         $post->save();
+    }
+
+    public function deletePost(DeletePostRequest $request, $postSlug)
+    {
+
+        $post = $this->post->where('slug', $postSlug)->first();
+
+        if ($request->validated()['usernameConfirmation'] === $post->user->username) {
+            $post->delete();
+        } else {
+            return response()->json([
+                "message" => 'You typed the wrong username'
+            ], 403);
+        }
     }
 }

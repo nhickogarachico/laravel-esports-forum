@@ -21,6 +21,7 @@ Route::post('/login', [AuthController::class, 'loginUser']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/u/{username}', [ProfileController::class, 'showProfileView']);
+Route::get('/u/{username}/edit', [ProfileController::class, 'showEditProfileView']);
 
 Route::get('/u/{username}/p/new', [PostController::class, 'showNewPostView']);
 Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);
@@ -29,3 +30,4 @@ Route::get('/u/{username}/p', [PostController::class, 'showUserPostsView']);
 Route::get('/p/{postSlug}', [PostController::class, 'showPostPageView']);
 Route::get('/p/{postSlug}/edit', [PostController::class, 'showEditPostView'])->middleware('auth');
 Route::put('/p/{postSlug}/edit', [PostController::class, 'editPost']);
+Route::delete('/p/{postSlug}/delete', [PostController::class, 'deletePost']);

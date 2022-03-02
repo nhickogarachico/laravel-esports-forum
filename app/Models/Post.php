@@ -33,4 +33,13 @@ class Post extends Model
             set: fn($value) => $value . "-" . Str::random(7)
         );
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            $post->tags()->detach();
+        });
+    }
 }

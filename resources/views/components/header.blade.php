@@ -17,26 +17,29 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <div class="ms-3">
-                    @if (Auth::check())
+                @if (Auth::check())
+                    <a href="/u/{{ Auth::user()->username }}/p/new" class="btn btn-primary"><i
+                            class="fas fa-plus"></i></a>
+                    <div class="ms-3">
+
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                 id="headerUserDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->username }}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="headerUserDropdownButton">
-                                <li><a class="dropdown-item" href="/u/{{Auth::user()->username}}">Profile</a></li>
+                                <li><a class="dropdown-item" href="/u/{{ Auth::user()->username }}">Profile</a></li>
                                 <form action="/logout" method="POST">
                                     @csrf
                                     <li><button class="dropdown-item" type="submit">Logout</button></li>
                                 </form>
                             </ul>
                         </div>
-                    @else
-                        <a href="/register" class="btn btn-primary">Register</a>
-                        <a href="/login" class="btn btn-primary">Login</a>
-                    @endif
-                </div>
+                    </div>
+                @else
+                    <a href="/register" class="btn btn-primary">Register</a>
+                    <a href="/login" class="btn btn-primary">Login</a>
+                @endif
 
             </div>
         </div>

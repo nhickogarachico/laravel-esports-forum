@@ -19,18 +19,10 @@
                 <div class="card-body">
                     <div>
                         <a href="/p/{{ $post->slug }}" class="stretched-link">{{ $post->title }}</a>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle position-relative button-in-stretched-link"  type="button" id="postDropdown{{$post->id}}"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="postDropdown{{$post->id}}">
-                                <li><a class="dropdown-item" href="/p/{{$post->slug}}/edit">Edit Post</a>
-                                </li>
-                                <li><a class="dropdown-item" href="#">Delete Post</a>
-                                </li>
-                            </ul>
-                        </div>
+                        @if (Auth::check() && Gate::allows('edit-post', $post))
+                            <post-settings-dropdown :post="{{ $post }}" ></post-settings-dropdown>
+                        @endif
+
                     </div>
                     <p>Posted {{ $post->created_at->diffForHumans() }}</p>
                     @foreach ($post->tags as $tag)

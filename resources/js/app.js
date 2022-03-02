@@ -22,6 +22,8 @@ window.Vue = require('vue').default;
 Vue.component('tags-input', require('./components/TagsInput.vue').default);
 Vue.component('add-post-form', require('./components/AddPostForm.vue').default);
 Vue.component('edit-post-form', require('./components/EditPostForm.vue').default);
+Vue.component('post-settings-dropdown', require('./components/PostSettingsDropdown.vue').default);
+Vue.component('delete-post-confirmation', require('./components/DeletePostConfirmation.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
