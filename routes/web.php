@@ -36,7 +36,11 @@ Route::put('/p/{postSlug}/edit', [PostController::class, 'editPost']);
 Route::delete('/p/{postSlug}/delete', [PostController::class, 'deletePost']);
 
 Route::get('/p/{postSlug}/like', [LikeController::class, 'getPostLikeData']);
+Route::get('/c/{commentId}/like', [LikeController::class, 'getCommentLikeData']);
 Route::post('/p/{postSlug}/like', [LikeController::class, 'likePost'])->middleware('auth');
 Route::delete('/p/{postSlug}/like', [LikeController::class, 'unlikePost'])->middleware('auth');
+Route::post('/c/{commentId}/like', [LikeController::class, 'likeComment'])->middleware('auth');
+Route::delete('/c/{commentId}/like', [LikeController::class, 'unlikeComment'])->middleware('auth');
 
 Route::post('p/{postSlug}/comment', [CommentController::class, 'commentToPost'])->middleware('auth');
+

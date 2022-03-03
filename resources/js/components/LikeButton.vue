@@ -3,13 +3,13 @@
     <button
       type="button"
       class="btn like-button"
-      @click.prevent="isPostLiked ? unlike() : like()"
+      @click.prevent="isLiked ? unlike() : like()"
     >
       <i
         :class="[
           'fas',
           'fa-thumbs-up',
-          isPostLiked ? 'liked' : '',
+          isLiked ? 'liked' : '',
         ]"
       ></i>
       {{ likesCount }}
@@ -19,18 +19,19 @@
 <script>
 export default {
   props: {
-    post: Object,
+    likeRouteParameter: [Number, String],
+    likeable: String
   },
   data() {
     return {
       likesCount: 0,
-      isPostLiked: false,
+      isLiked: false,
     };
   },
   methods: {
     like: function () {
       axios
-        .post(`/p/${this.post.slug}/like`)
+        .post(`/${this.likeable}/${this.likeRouteParameter}/like`)
         .then((response) => {
           this.fetchLikesData();
         })
@@ -40,7 +41,7 @@ export default {
     },
     unlike: function () {
       axios
-        .delete(`/p/${this.post.slug}/like`)
+        .delete(`/${this.likeable}/${this.likeRouteParameter}/like`)
         .then((response) => {
           this.fetchLikesData();
         })
@@ -50,11 +51,11 @@ export default {
     },
     fetchLikesData: function () {
       axios
-        .get(`/p/${this.post.slug}/like`)
+        .get(`/${this.likeable}/${this.likeRouteParameter}/like`)
         .then((response) => {
-          const { likesCount, isPostLiked } = response.data;
+          const { likesCount, isLiked } = response.data;
           this.likesCount = likesCount;
-          this.isPostLiked = isPostLiked;
+          this.isLiked = isLiked;
         })
         .catch((error) => {
           console.log(error.response);

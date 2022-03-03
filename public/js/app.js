@@ -5722,19 +5722,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    post: Object
+    likeRouteParameter: [Number, String],
+    likeable: String
   },
   data: function data() {
     return {
       likesCount: 0,
-      isPostLiked: false
+      isLiked: false
     };
   },
   methods: {
     like: function like() {
       var _this = this;
 
-      axios.post("/p/".concat(this.post.slug, "/like")).then(function (response) {
+      axios.post("/".concat(this.likeable, "/").concat(this.likeRouteParameter, "/like")).then(function (response) {
         _this.fetchLikesData();
       })["catch"](function (error) {
         window.location.href = "/login";
@@ -5743,7 +5744,7 @@ __webpack_require__.r(__webpack_exports__);
     unlike: function unlike() {
       var _this2 = this;
 
-      axios["delete"]("/p/".concat(this.post.slug, "/like")).then(function (response) {
+      axios["delete"]("/".concat(this.likeable, "/").concat(this.likeRouteParameter, "/like")).then(function (response) {
         _this2.fetchLikesData();
       })["catch"](function (error) {
         console.log(error.response);
@@ -5752,12 +5753,12 @@ __webpack_require__.r(__webpack_exports__);
     fetchLikesData: function fetchLikesData() {
       var _this3 = this;
 
-      axios.get("/p/".concat(this.post.slug, "/like")).then(function (response) {
+      axios.get("/".concat(this.likeable, "/").concat(this.likeRouteParameter, "/like")).then(function (response) {
         var _response$data = response.data,
             likesCount = _response$data.likesCount,
-            isPostLiked = _response$data.isPostLiked;
+            isLiked = _response$data.isLiked;
         _this3.likesCount = likesCount;
-        _this3.isPostLiked = isPostLiked;
+        _this3.isLiked = isLiked;
       })["catch"](function (error) {
         console.log(error.response);
       });
@@ -29808,14 +29809,12 @@ var render = function () {
         on: {
           click: function ($event) {
             $event.preventDefault()
-            _vm.isPostLiked ? _vm.unlike() : _vm.like()
+            _vm.isLiked ? _vm.unlike() : _vm.like()
           },
         },
       },
       [
-        _c("i", {
-          class: ["fas", "fa-thumbs-up", _vm.isPostLiked ? "liked" : ""],
-        }),
+        _c("i", { class: ["fas", "fa-thumbs-up", _vm.isLiked ? "liked" : ""] }),
         _vm._v("\n    " + _vm._s(_vm.likesCount) + "\n  "),
       ]
     ),

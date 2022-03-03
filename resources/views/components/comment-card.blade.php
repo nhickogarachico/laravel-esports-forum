@@ -1,7 +1,7 @@
 <div class="d-flex">
     <div>
-        <a href="/u/{{ $comment->user->username }}"><img src="{{ $comment->user->avatar }}" alt="{{ $comment->user->avatar }} avatar"
-                class="rounded-circle avatar-small" /></a>
+        <a href="/u/{{ $comment->user->username }}"><img src="{{ $comment->user->avatar }}"
+                alt="{{ $comment->user->avatar }} avatar" class="rounded-circle avatar-small" /></a>
     </div>
     <div>
         <a href="/u/{{ $comment->user->username }}">{{ $comment->user->username }}</a>
@@ -12,7 +12,7 @@
 
         <p>{{ $comment->content }}</p>
         <div>
-        {{-- <like-button :post="{{ $post }}" :is-liked="{{ $post->likes }}"></like-button> --}}
-    </div>
+            <like-button :like-route-parameter="{{$comment->id}}" likeable="c"></like-button>
+        </div>
     </div>
 </div>

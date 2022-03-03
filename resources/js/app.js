@@ -26,6 +26,7 @@ Vue.component('post-settings-dropdown', require('./components/PostSettingsDropdo
 Vue.component('delete-post-confirmation', require('./components/DeletePostConfirmation.vue').default);
 Vue.component('like-button', require('./components/LikeButton.vue').default);
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
