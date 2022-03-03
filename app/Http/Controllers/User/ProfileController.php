@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\EditProfileRequest;
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,12 @@ class ProfileController extends Controller
 {
 
     protected $user;
+    protected $activity;
 
-    public function __construct(User $user)
+    public function __construct(User $user, Activity $activity)
     {
         $this->user = $user;
+        $this->activity = $activity;
     }
 
     public function showProfileView($username)
@@ -26,6 +29,7 @@ class ProfileController extends Controller
         if ($user) {
             return view('pages.profile', [
                 'user' => $user,
+                'activities' => $this->activity->where('user_id', $user->id)->orderBy('created_at', 'DESC')->get()
             ]);
         }
 

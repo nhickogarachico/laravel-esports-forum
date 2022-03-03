@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Like;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
@@ -26,6 +27,9 @@ class LikeController extends Controller
 
         $post = $this->post->where('slug', $postSlug)->first();
         $post->likes()->save($like);
+
+        $activity = new Activity(["user_id" => Auth::id()]);
+        $like->activities()->save($activity);
     }
 
     public function getPostLikeData($postSlug)
@@ -61,6 +65,9 @@ class LikeController extends Controller
 
         $comment = $this->comment->where('id', $commentId)->first();
         $comment->likes()->save($like);
+
+        $activity = new Activity(["user_id" => Auth::id()]);
+        $like->activities()->save($activity);
     }
 
     public function unlikeComment($commentId)

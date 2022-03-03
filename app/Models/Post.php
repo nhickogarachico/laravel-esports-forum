@@ -34,6 +34,10 @@ class Post extends Model
         return $this->hasMany(Comment::class)->withCount('likes');
     }
     
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'activitiable');
+    }
     // Mutator to add some random characters at the end of the slug to make it unique
     protected function slug() : Attribute
     {

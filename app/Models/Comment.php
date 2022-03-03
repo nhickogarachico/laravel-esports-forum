@@ -16,7 +16,8 @@ class Comment extends Model
         'parent_id'
     ];
 
-    public function post() {
+    public function post()
+    {
         return $this->belongsTo(Post::class);
     }
 
@@ -25,29 +26,34 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
-    public function parentComment() 
+    public function parentComment()
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function likes() {
+    public function likes()
+    {
         return $this->morphMany(Like::class, 'likeable');
     }
 
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'activitiable');
+    }
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($comment) {
-            foreach($comment->replies as $reply)
-            {
+            foreach ($comment->replies as $reply) {
                 $reply->delete();
             }
-            foreach($comment->likes as $like) {
+            foreach ($comment->likes as $like) {
                 $like->delete();
             }
         });

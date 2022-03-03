@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\DeletePostRequest;
 use App\Http\Requests\Post\EditPostRequest;
 use App\Http\Requests\Post\StorePostRequest;
+use App\Models\Activity;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -43,6 +44,8 @@ class PostController extends Controller
         foreach ($request->validated()['tags'] as $tag) {
             $post->tags()->attach($tag["id"]);
         }
+        $activity = new Activity(["user_id" => Auth::id()]);
+        $post->activities()->save($activity);
 
         return response()->json([
             'slug' => $post->slug

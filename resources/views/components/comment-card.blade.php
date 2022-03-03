@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex" id="{{$comment->id}}">
     <div>
         <a href="/u/{{ $comment->user->username }}"><img src="{{ $comment->user->avatar }}"
                 alt="{{ $comment->user->avatar }} avatar" class="rounded-circle avatar-small" /></a>

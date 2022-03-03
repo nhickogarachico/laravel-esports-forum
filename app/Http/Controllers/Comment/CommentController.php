@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Comment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\StoreCommentRequest;
+use App\Models\Activity;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class CommentController extends Controller
     {
         $post = $this->post->where('slug', $postSlug)->first();
 
-        $this->comment->create(
+        $comment = $this->comment->create(
             array_merge($request->validated(), [
                 'user_id' => Auth::id(),
                 'post_id' => $post->id,
@@ -32,6 +33,9 @@ class CommentController extends Controller
             ])
 
         );
+
+        $activity = new Activity(["user_id" => Auth::id()]);
+        $comment->activities()->save($activity);
 
         return redirect("/p/$postSlug");
     }

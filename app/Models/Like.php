@@ -19,4 +19,8 @@ class Like extends Model
         return $this->morphTo();
     }
 
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'activitiable');
+    }
 }
