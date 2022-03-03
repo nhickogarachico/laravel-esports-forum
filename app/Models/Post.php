@@ -31,7 +31,7 @@ class Post extends Model
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->withCount('likes');
     }
     
     // Mutator to add some random characters at the end of the slug to make it unique
@@ -48,6 +48,15 @@ class Post extends Model
 
         static::deleting(function ($post) {
             $post->tags()->detach();
+
+            foreach($post->comments as $comment) {
+                $comment->delete();
+            }
+           
+            foreach($post->likes as $like) {
+                $like->delete();
+            }
+            
         });
     }
 }

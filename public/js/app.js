@@ -5723,11 +5723,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     likeRouteParameter: [Number, String],
-    likeable: String
+    likeable: String,
+    initialLikesCount: Number
   },
   data: function data() {
     return {
-      likesCount: 0,
+      likesCount: this.initialLikesCount,
       isLiked: false
     };
   },

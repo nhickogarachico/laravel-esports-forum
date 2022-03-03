@@ -51,7 +51,7 @@ class PostController extends Controller
 
     public function showPostPageView($postSlug)
     {
-        $post = $this->post->where('slug', $postSlug)->first();
+        $post = $this->post->where('slug', $postSlug)->withCount('likes')->first();
 
         if ($post) {
             return view('pages.post', [
@@ -106,6 +106,7 @@ class PostController extends Controller
         $post = $this->post->where('slug', $postSlug)->first();
 
         if ($request->validated()['usernameConfirmation'] === $post->user->username) {
+    
             $post->delete();
         } else {
             return response()->json([

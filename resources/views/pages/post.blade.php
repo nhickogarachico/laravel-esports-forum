@@ -22,7 +22,7 @@
                     @foreach ($post->tags as $tag)
                         <span class="badge bg-primary">{{ $tag->tag }}</span>
                     @endforeach
-                    <like-button like-route-parameter="{{ $post->slug }}" :is-liked="{{ $post->likes }}" likeable="p"></like-button>
+                    <like-button like-route-parameter="{{ $post->slug }}" :is-liked="{{ $post->likes }}" likeable="p" :initial-likes-count="{{$post->likes_count}}"></like-button>
                 </div>
             </div>
             @if (Auth::check())

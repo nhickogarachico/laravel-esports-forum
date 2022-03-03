@@ -20,18 +20,28 @@ class CommentController extends Controller
         $this->comment = $comment;
     }
 
-    public function commentToPost(StoreCommentRequest $request, $postSlug)
+    public function comment(StoreCommentRequest $request, $postSlug, $commentId = null)
     {
         $post = $this->post->where('slug', $postSlug)->first();
 
         $this->comment->create(
             array_merge($request->validated(), [
                 'user_id' => Auth::id(),
-                'post_id' => $post->id
+                'post_id' => $post->id,
+                'parent_id' => $commentId
             ])
 
         );
 
-        return back();
+        return redirect("/p/$postSlug");
     }
+
+    public function showCommentReplyView($commentId)
+    {
+        $comment = $this->comment->where('id', $commentId)->first();
+        return view('pages.reply-comment',[
+            'comment' => $comment
+        ]);
+    }
+
 }

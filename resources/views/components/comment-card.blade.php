@@ -10,9 +10,17 @@
             <p>edited {{ $comment->updated_at->diffForHumans() }}</p>
         @endif
 
+        {{-- reply to --}}
+        @if ($comment->parent_id)
+            <div>
+                <p>{{$comment->parentComment->user->username}}</p>
+                <p>{{$comment->parentComment->content}}</p>
+            </div>
+        @endif
         <p>{{ $comment->content }}</p>
         <div>
-            <like-button :like-route-parameter="{{$comment->id}}" likeable="c"></like-button>
+            <like-button :like-route-parameter="{{$comment->id}}" likeable="c" :initial-likes-count={{$comment->likes_count}}></like-button>
+            <a href="/c/{{$comment->id}}/reply" class="btn btn-secondary">Reply</a>
         </div>
     </div>
 </div>

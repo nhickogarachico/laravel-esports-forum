@@ -20,11 +20,12 @@
 export default {
   props: {
     likeRouteParameter: [Number, String],
-    likeable: String
+    likeable: String,
+    initialLikesCount: Number
   },
   data() {
     return {
-      likesCount: 0,
+      likesCount: this.initialLikesCount,
       isLiked: false,
     };
   },

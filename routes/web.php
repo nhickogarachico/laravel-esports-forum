@@ -42,5 +42,8 @@ Route::delete('/p/{postSlug}/like', [LikeController::class, 'unlikePost'])->midd
 Route::post('/c/{commentId}/like', [LikeController::class, 'likeComment'])->middleware('auth');
 Route::delete('/c/{commentId}/like', [LikeController::class, 'unlikeComment'])->middleware('auth');
 
-Route::post('p/{postSlug}/comment', [CommentController::class, 'commentToPost'])->middleware('auth');
+
+Route::post('p/{postSlug}/comment/{commentId?}', [CommentController::class, 'comment'])->middleware('auth');
+Route::get('c/{commentId}/reply', [CommentController::class, 'showCommentReplyView'])->middleware('auth');
+Route::post('p/{postSlug}/comment', [CommentController::class, 'comment'])->middleware('auth');
 

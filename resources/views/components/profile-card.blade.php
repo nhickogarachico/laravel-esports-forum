@@ -1,11 +1,11 @@
 <div class="card mb-2">
     <div class="card-header">
-        <img src="{{$user->avatar}}" alt="{{ $user->username }} avatar" class="avatar-profile">
+        <img src="{{ $user->avatar }}" alt="{{ $user->username }} avatar" class="avatar-profile">
     </div>
     <div class="card-body">
         <div>
             <h4>{{ $user->username }}</h4>
-            <p>Joined {{$user->created_at->diffForHumans()}}</p>
+            <p>Joined {{ $user->created_at->diffForHumans() }}</p>
             @if (Auth::check() && Auth::user()->username === $user->username)
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="profileSettingsDropdown"
@@ -22,8 +22,8 @@
                 </div>
             @endif
         </div>
-        <p><i class="fas fa-comment"></i> <a href="/u/{{$user->username}}/p"> Posts {{count($user->posts)}} </a></p>
-        <p><i class="fas fa-comments"></i> Comments 15</p>
-    
+        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comment"></i> Posts {{ $user->posts->count() }} </p></a>
+        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comments"></i> Comments {{$user->comments->count() }} </p></a>
+
     </div>
 </div>

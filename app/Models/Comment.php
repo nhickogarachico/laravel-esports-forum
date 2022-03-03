@@ -25,11 +25,31 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id');
     }
 
+    public function parentComment() 
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
 
     public function likes() {
         return $this->morphMany(Like::class, 'likeable');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($comment) {
+            foreach($comment->replies as $reply)
+            {
+                $reply->delete();
+            }
+            foreach($comment->likes as $like) {
+                $like->delete();
+            }
+        });
     }
 }
