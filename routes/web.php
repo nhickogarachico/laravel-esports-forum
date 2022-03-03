@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Like\LikeController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\ProfileController;
@@ -37,3 +38,5 @@ Route::delete('/p/{postSlug}/delete', [PostController::class, 'deletePost']);
 Route::get('/p/{postSlug}/like', [LikeController::class, 'getPostLikeData']);
 Route::post('/p/{postSlug}/like', [LikeController::class, 'likePost'])->middleware('auth');
 Route::delete('/p/{postSlug}/like', [LikeController::class, 'unlikePost'])->middleware('auth');
+
+Route::post('p/{postSlug}/comment', [CommentController::class, 'commentToPost'])->middleware('auth');
