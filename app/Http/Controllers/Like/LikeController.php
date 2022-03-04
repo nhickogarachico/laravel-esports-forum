@@ -14,10 +14,12 @@ class LikeController extends Controller
 {
     protected $post;
     protected $comment;
-    public function __construct(Post $post, Comment $comment)
+    protected $activity;
+    public function __construct(Post $post, Comment $comment, Activity $activity)
     {
         $this->post = $post;
         $this->comment = $comment;
+        $this->activity = $activity;
     }
 
     public function likePost($postSlug)
@@ -56,7 +58,14 @@ class LikeController extends Controller
     public function unlikePost($postSlug)
     {
         $post = $this->post->where('slug', $postSlug)->first();
-        $post->likes->where('user_id', Auth::id())->first()->delete();
+        $like = $post->likes->where('user_id', Auth::id())->first();
+        $like->delete();
+        $this->activity
+            ->where('user_id', Auth::id())
+            ->where('activitiable_type', 'App\Models\Like')
+            ->where('activitiable_id', $like->id)
+            ->first()
+            ->delete();
     }
 
     public function likeComment($commentId)
@@ -73,6 +82,14 @@ class LikeController extends Controller
     public function unlikeComment($commentId)
     {
         $comment = $this->comment->where('id', $commentId)->first();
-        $comment->likes->where('user_id', Auth::id())->first()->delete();
+        $like = $comment->likes->where('user_id', Auth::id())->first();
+        $like->delete();
+        
+        $this->activity
+            ->where('user_id', Auth::id())
+            ->where('activitiable_type', 'App\Models\Like')
+            ->where('activitiable_id', $like->id)
+            ->first()
+            ->delete();
     }
 }
