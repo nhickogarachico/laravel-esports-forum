@@ -79,6 +79,7 @@ export default {
         .replace(/^-+|-+$/g, "");
     },
     addPost: function () {
+
       axios
         .post(`/u/${this.username}/p/new`, {
           title: this.title,
@@ -92,6 +93,7 @@ export default {
           window.location.href = `/p/${slug}`;
         })
         .catch((error) => {
+          console.log(error.response)
           const { errors } = error.response.data;
           if (errors.title) {
             this.validationErrors.title = errors.title;

@@ -20,15 +20,18 @@
                     <div>
                         <a href="/p/{{ $post->slug }}" class="stretched-link">{{ $post->title }}</a>
                         @if (Auth::check() && Gate::allows('edit-post', $post))
-                            <post-settings-dropdown :post="{{ $post }}" ></post-settings-dropdown>
+                            <post-settings-dropdown :post="{{ $post }}"></post-settings-dropdown>
                         @endif
-                    </div>  
+                    </div>
                     <p>Posted {{ $post->created_at->diffForHumans() }}</p>
-                    
+
                     @foreach ($post->tags as $tag)
                         <span class="badge bg-primary">{{ $tag->tag }}</span>
                     @endforeach
-                    <like-button :post="{{$post}}" :is-liked="{{$post->likes}}"></like-button>
+                    <div>
+                        <like-button :post="{{ $post }}" :is-liked="{{ $post->likes }}"></like-button>
+                        <p>{{$post->comments->count() > 0 ? $post->comments->count() . ' replies' : ''}}</p>
+                    </div>
                 </div>
             </div>
         @endforeach

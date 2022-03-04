@@ -5451,6 +5451,7 @@ __webpack_require__.r(__webpack_exports__);
         var slug = response.data.slug;
         window.location.href = "/p/".concat(slug);
       })["catch"](function (error) {
+        console.log(error.response);
         var errors = error.response.data.errors;
 
         if (errors.title) {

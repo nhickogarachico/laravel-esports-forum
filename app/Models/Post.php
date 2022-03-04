@@ -38,6 +38,18 @@ class Post extends Model
     {
         return $this->morphMany(Activity::class, 'activitiable');
     }
+
+    public function topPosts()
+    {
+        return $this->withCount('likes')->orderBy('likes_count', 'DESC')->orderBy('created_at', 'DESC')->get();
+    }
+
+    public function mostReplies()
+    {
+        return $this->withCount('comments')->orderBy('comments_count','DESC')->orderBy('created_at', 'DESC')->get();
+    }
+
+
     // Mutator to add some random characters at the end of the slug to make it unique
     protected function slug() : Attribute
     {
@@ -45,6 +57,7 @@ class Post extends Model
             set: fn($value) => $value . "-" . Str::random(7)
         );
     }
+
 
     protected static function boot()
     {

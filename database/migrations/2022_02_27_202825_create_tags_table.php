@@ -17,14 +17,34 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('tag');
+            $table->string('query_tag');
         });
 
         DB::table('tags')->insert([
-            ['tag' => 'News'],
-            ['tag' => 'Match Discussion'],
-            ['tag' => 'Dota 2'],
-            ['tag' => 'League of Legends'],
-            ['tag' => 'CS:GO'],
+            [
+                'tag' => 'News',
+                'query_tag' => 'news'
+            ],
+            [
+                'tag' => 'Match Discussion',
+                'query_tag' => 'match-discussion'
+            ],
+            [
+                'tag' => 'League of Legends',
+                'query_tag' => 'league-of-legends'
+            ],
+            [
+                'tag' => 'CS:GO',
+                'query_tag' => 'cs-go'
+            ],
+            [
+                'tag' => 'Dota 2',
+                'query_tag' => 'dota-2'
+            ],
+            [
+                'tag' => 'Valorant',
+                'query_tag' => 'valorant'
+            ],
 
         ]);
     }

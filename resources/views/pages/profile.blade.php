@@ -36,6 +36,7 @@
                             @endforeach
                             <p>{{ $activity->activitiable->content }}</p>
                             <p>{{ $activity->activitiable->created_at->diffForHumans() }}</p>
+                            <p>{{ $activity->activitiable->replies()->count() > 0 ? $activity->activitiable->replies()->count() . ' replies' : '' }}</p>
                         @case('App\Models\Like')
                             @if ($activity->activitiable->likeable_type === 'App\Models\Post')
                                 <p>{{ $activity->user->username }} liked a post.</p>
@@ -57,6 +58,7 @@
                                 @endforeach
                                 <p>{{ $activity->activitiable->likeable->content }}</p>
                                 <p>{{ $activity->activitiable->likeable->created_at->diffForHumans() }}</p>
+                                <p>{{ $activity->activitiable->likeable->replies()->count() > 0 ? $activity->activitiable->likeable->replies()->count() . ' replies' : '' }}</p>
                             @endif
                         @endswitch
                     </div>

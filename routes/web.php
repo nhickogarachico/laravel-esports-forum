@@ -3,14 +3,12 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Like\LikeController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home');
-});
 
 
 Route::prefix('register')->controller(RegisterController::class)->group(function() {
@@ -46,4 +44,6 @@ Route::delete('/c/{commentId}/like', [LikeController::class, 'unlikeComment'])->
 Route::post('p/{postSlug}/comment/{commentId?}', [CommentController::class, 'comment'])->middleware('auth');
 Route::get('c/{commentId}/reply', [CommentController::class, 'showCommentReplyView'])->middleware('auth');
 Route::post('p/{postSlug}/comment', [CommentController::class, 'comment'])->middleware('auth');
+
+Route::get('/{tag?}', [HomeController::class, 'showHomeView'] );
 

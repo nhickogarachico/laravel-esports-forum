@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <div>
-            <h4>{{ $user->username }}</h4>
+            <h4><a href="/u/{{$user->username}}">{{ $user->username }}</a></h4>
             <p>Joined {{ $user->created_at->diffForHumans() }}</p>
             @if (Auth::check() && Auth::user()->username === $user->username)
                 <div class="dropdown">
