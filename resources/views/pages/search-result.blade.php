@@ -2,25 +2,23 @@
 
 @section('content')
     <div>
-        <h1>Welcome to Esports Forum!</h1>
-        <p>Online community for people who like everything esports. From League of Legend to CS:GO, you can meet and
-            socialize with people that play your game and watch your favorite teams.</p>
         <div class="row">
             <div class="col-md-3">
                 <x-post-filter></x-post-filter>
             </div>
 
             <div class="col">
-                <h2>Recent Posts</h2>
+                <h2>Search Results</h2>
+                <p>Showing {{$query ? $posts->count(). 'results for ' . $query . '.' : 'all posts.' }}</p>
                 <div class="d-flex">
                     <div>
-                        <a href="/{{Route::input('tag')}}"><span class="badge bg-secondary">Latest Posts</span> </a>
+                        <a href="{{$query ? '?q=' . $query : '/' . Route::input('tag')}}"><span class="badge bg-secondary">Latest Posts</span> </a>
                     </div>
                     <div>
-                        <a href="?sort=top"><span class="badge bg-secondary">Top Posts</span> </a>
+                        <a href="?{{$query ? 'q='.$query .'&' : ''}}sort=top"><span class="badge bg-secondary">Top Posts</span> </a>
                     </div>
                     <div>
-                        <a href="?sort=replies"><span class="badge bg-secondary">Most Replies</span> </a>
+                        <a href="?{{$query ? 'q='.$query .'&' : ''}}sort=replies"><span class="badge bg-secondary">Most Replies</span> </a>
                     </div>
                 </div>
                 @foreach ($posts as $post)

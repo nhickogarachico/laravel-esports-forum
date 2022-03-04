@@ -21,7 +21,6 @@ class HomeController extends Controller
 
     public function showHomeView(Request $request, $tag = "")
     {
-
         if ($tag) {
             $tag = $this->tag->where('query_tag', $tag)->first();
             if ($tag) {
@@ -60,11 +59,6 @@ class HomeController extends Controller
             'tags' => $this->tag->all(),
             'posts' => $posts
         ]);
-
-        // $tag =  $this->tag->where('query_tag', $tag)->first();
-
-        // return response()->json([
-        //     'tags' => $tag->posts->withCount('likes')->get()
-        // ]);
+        
     }
 }

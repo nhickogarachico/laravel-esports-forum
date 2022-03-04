@@ -12,15 +12,16 @@
                         <a class="nav-link active" aria-current="page" href="#">Discussion</a>
                     </li>
                 </ul>
-
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="/search" method="GET" class="d-flex"> 
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        name="q" />
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 @if (Auth::check())
                     <a href="/u/{{ Auth::user()->username }}/p/new" class="btn btn-primary"><i
                             class="fas fa-plus"></i></a>
-                            <img src="{{Auth::user()->avatar}}" alt="{{Auth::user()->username}} avatar" class="avatar-xs rounded-circle">
+                    <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->username }} avatar"
+                        class="avatar-xs rounded-circle">
                     <div class="ms-3">
 
                         <div class="dropdown">
