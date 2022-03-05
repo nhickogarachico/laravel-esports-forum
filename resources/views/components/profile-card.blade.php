@@ -4,7 +4,12 @@
     </div>
     <div class="card-body">
         <div>
-            <h4><a href="/u/{{$user->username}}">{{ $user->username }}</a></h4>
+            <h4><a href="/u/{{ $user->username }}">{{ $user->username }}</a></h4>
+            @if ($user->role_id === 2)
+                <div>
+                    <span class="badge bg-primary">Admin</span>
+                </div>
+            @endif
             <p>Joined {{ $user->created_at->diffForHumans() }}</p>
             @if (Auth::check() && Auth::user()->username === $user->username)
                 <div class="dropdown">
@@ -22,8 +27,10 @@
                 </div>
             @endif
         </div>
-        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comment"></i> Posts {{ $user->posts->count() }} </p></a>
-        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comments"></i> Comments {{$user->comments->count() }} </p></a>
+        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comment"></i> Posts {{ $user->posts->count() }}
+        </p></a>
+        <p><a href="/u/{{ $user->username }}/p"><i class="fas fa-comments"></i> Comments
+                {{ $user->comments->count() }} </p></a>
 
     </div>
 </div>

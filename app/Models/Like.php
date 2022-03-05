@@ -23,4 +23,5 @@ class Like extends Model
     {
         return $this->morphMany(Activity::class, 'activitiable');
     }
+
 }

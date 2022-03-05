@@ -40,7 +40,7 @@
                                 </div>
                                 <div>
                                     @foreach ($post->tags as $tag)
-                                        <span class="badge bg-primary">{{ $tag->tag }}</span>
+                                       <a href="/{{$tag->query_tag}}"> <span class="badge bg-primary">{{ $tag->tag }}</span></a>
                                     @endforeach
                                 </div>
                             </div>

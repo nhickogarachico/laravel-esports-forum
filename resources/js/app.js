@@ -25,6 +25,8 @@ Vue.component('edit-post-form', require('./components/EditPostForm.vue').default
 Vue.component('post-settings-dropdown', require('./components/PostSettingsDropdown.vue').default);
 Vue.component('delete-post-confirmation', require('./components/DeletePostConfirmation.vue').default);
 Vue.component('like-button', require('./components/LikeButton.vue').default);
+Vue.component('add-tag-button', require('./components/AddTagButton.vue').default);
+Vue.component('add-tag-modal', require('./components/AddTagModal.vue').default);
 
 
 /**

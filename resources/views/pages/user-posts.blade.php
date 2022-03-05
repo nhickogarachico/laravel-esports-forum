@@ -26,11 +26,11 @@
                     <p>Posted {{ $post->created_at->diffForHumans() }}</p>
 
                     @foreach ($post->tags as $tag)
-                        <span class="badge bg-primary">{{ $tag->tag }}</span>
+                        <a href="/{{ $tag->query_tag }}"><span class="badge bg-primary">{{ $tag->tag }}</span></a>
                     @endforeach
                     <div>
                         <like-button :post="{{ $post }}" :is-liked="{{ $post->likes }}"></like-button>
-                        <p>{{$post->comments->count() > 0 ? $post->comments->count() . ' replies' : ''}}</p>
+                        <p>{{ $post->comments->count() > 0 ? $post->comments->count() . ' replies' : '' }}</p>
                     </div>
                 </div>
             </div>

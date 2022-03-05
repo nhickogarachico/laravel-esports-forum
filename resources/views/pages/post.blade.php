@@ -5,6 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col mx-auto">
+            <a href="/" class="btn btn-primary">Back</a>
             <div class="d-flex">
                 <div>
                     <a href="/u/{{ $post->user->username }}"><img src="{{ $post->user->avatar }}"
@@ -20,7 +21,7 @@
 
                     <p>{{ $post->content }}</p>
                     @foreach ($post->tags as $tag)
-                        <span class="badge bg-primary">{{ $tag->tag }}</span>
+                       <a href="/{{$tag->query_tag}}"><span class="badge bg-primary">{{ $tag->tag }}</span></a> 
                     @endforeach
                     <like-button like-route-parameter="{{ $post->slug }}" :is-liked="{{ $post->likes }}" likeable="p" :initial-likes-count="{{$post->likes_count}}"></like-button>
                 </div>

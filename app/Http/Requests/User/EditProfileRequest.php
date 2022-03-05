@@ -29,7 +29,10 @@ class EditProfileRequest extends FormRequest
     {
         return [
             'avatar' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'username' => ['required', Rule::unique('users')->ignore(Auth::user())],
+            'username' => ['required', Rule::unique('users')->ignore(Auth::id())->where(function($query){
+                return $query->where('role_id', '=', 2);
+            })],
+            'role_id' => ['nullable', 'integer']
         ];
     }
 }

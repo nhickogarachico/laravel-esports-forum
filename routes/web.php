@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Comment\CommentController;
@@ -42,6 +43,12 @@ Route::post('/c/{commentId}/like', [LikeController::class, 'likeComment'])->midd
 Route::delete('/c/{commentId}/like', [LikeController::class, 'unlikeComment'])->middleware('auth');
 
 Route::get('/search', [SearchController::class, 'showSearchResults']);
+
+Route::get('/admin', [AdminController::class, 'showAdminHomeView']);
+Route::get('/admin/users', [AdminController::class, 'showAdminUserView']);
+Route::get('/admin/tags', [AdminController::class, 'showAdminTagsView']);
+Route::post('/admin/tags', [AdminController::class, 'addTag']);
+Route::get('/admin/posts', [AdminController::class, 'showAdminPostsView']);
 
 Route::post('p/{postSlug}/comment/{commentId?}', [CommentController::class, 'comment'])->middleware('auth');
 Route::get('c/{commentId}/reply', [CommentController::class, 'showCommentReplyView'])->middleware('auth');

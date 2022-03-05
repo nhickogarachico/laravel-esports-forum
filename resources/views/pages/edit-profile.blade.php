@@ -27,8 +27,20 @@
                     <input id="username" type="text" class="form-control" name="username"
                         value="{{ old('username', $user->username) }}" />
                 </div>
+                @if (Gate::allows('access-admin', Auth::user()))
+                    <div class="mb-2">
+                        <label for="role">Role</label>
+                        <select class="form-select" name="role_id" value="{{ $user->role_id }}">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}" {{ $user->role_id === $role->id ? 'selected' : '' }}>
+                                    {{ $role->role }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+
                 <div>
-                    <a href="/u/{{$user->username}}" class="btn btn-secondary">Cancel</a>
+                    <a href="/u/{{ $user->username }}" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>

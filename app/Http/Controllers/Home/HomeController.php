@@ -26,10 +26,10 @@ class HomeController extends Controller
             if ($tag) {
                 switch ($request->query('sort')) {
                     case 'top':
-                        $posts = $tag->posts()->withCount('likes')->orderBy('likes_count', 'DESC')->get();
+                        $posts = $tag->topPosts();
                         break;
                     case 'replies':
-                        $posts =  $tag->posts()->withCount('comments')->orderBy('comments_count', 'DESC')->get();
+                        $posts =  $tag->mostReplies();
                         break;
                     default:
                         $posts = $tag->posts;
@@ -53,12 +53,9 @@ class HomeController extends Controller
             }
         }
 
-
-
         return view('pages.home', [
             'tags' => $this->tag->all(),
             'posts' => $posts
         ]);
-        
     }
 }

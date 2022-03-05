@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\EditProfileRequest;
 use App\Models\Activity;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +17,13 @@ class ProfileController extends Controller
 
     protected $user;
     protected $activity;
+    protected $role;
 
-    public function __construct(User $user, Activity $activity)
+    public function __construct(User $user, Activity $activity, Role $role)
     {
         $this->user = $user;
         $this->activity = $activity;
+        $this->role = $role;
     }
 
     public function showProfileView($username)
@@ -41,9 +44,10 @@ class ProfileController extends Controller
     {
         $user = $this->user->fetchUserByUsername($username);
 
-        if ($user && Gate::allows('edit-profile', $user)) {
+        if ($user && Gate::allows('edit-profile', $user) || Gate::allows('access-admin', Auth::user())) {
             return view('pages.edit-profile', [
                 'user' => $user,
+                'roles' => $this->role->all()
             ]);
         } else {
             return abort(401, "You are not authorized to do this action");
@@ -56,13 +60,16 @@ class ProfileController extends Controller
     {
         $user = $this->user->fetchUserByUsername($username);
 
-        if(!$user)
-        {
+        if (!$user) {
             return abort(404);
         }
 
-        if (Gate::allows('edit-profile', $user)) {
+        if (Gate::allows('access-admin', Auth::user()) || Gate::allows('edit-profile', $user)) {
             $user->username = $request->validated()['username'];
+            
+            if (array_key_exists('role_id', $request->validated())) {
+                $user->role_id = $request->validated()['role_id'];
+            }
 
             // Upload image
             if ($request->file('avatar')) {
@@ -87,8 +94,5 @@ class ProfileController extends Controller
                 'message' => 'You are not authorized to do this action'
             ], 401);
         }
-
-        
     }
-
 }

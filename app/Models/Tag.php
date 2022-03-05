@@ -9,9 +9,24 @@ class Tag extends Model
 {
     use HasFactory;
 
-    public function posts() {
-        return $this->belongsToMany(Post::class);
-    }
-    
+    protected $fillable = [
+        'tag',
+        'query_tag'
+    ];
 
+    public $timestamps = false;
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class)->orderBy('created_at', 'DESC');
+    }
+
+    public function topPosts()
+    {
+        return $this->belongsToMany(Post::class)->withCount('likes')->orderBy('likes_count', 'DESC')->get();
+    }
+
+    public function mostReplies()
+    {
+        return $this->belongsToMany(Post::class)->withCount('comments')->orderBy('comments_count', 'DESC')->get();
+    }
 }
