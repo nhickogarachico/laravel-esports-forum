@@ -27,6 +27,12 @@ Vue.component('delete-post-confirmation', require('./components/DeletePostConfir
 Vue.component('like-button', require('./components/LikeButton.vue').default);
 Vue.component('add-tag-button', require('./components/AddTagButton.vue').default);
 Vue.component('add-tag-modal', require('./components/AddTagModal.vue').default);
+Vue.component('edit-tag-modal', require('./components/EditTagModal.vue').default);
+Vue.component('edit-tag-button', require('./components/EditTagButton.vue').default);
+Vue.component('delete-tag-button', require('./components/DeleteTagButton.vue').default);
+Vue.component('delete-tag-confirmation', require('./components/DeleteTagConfirmation.vue').default);
+Vue.component('delete-post-button', require('./components/DeletePostButton.vue').default);
+Vue.component('delete-post-admin-confirmation', require('./components/DeletePostAdminConfirmation.vue').default);
 
 
 /**

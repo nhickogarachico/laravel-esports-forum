@@ -23,9 +23,9 @@
                     <td>{{ $user->created_at->format('Y-m-d')}}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="/u/{{$user->username}}/edit" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
+                            <a href="/admin/users/{{$user->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
                             <a href="/u/{{$user->username}}" class="btn btn-success"><i class="fas fa-external-link"></i></a>
-                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                            <a href="/admin/users/{{$user->id}}/delete" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                         </div>
                     </td>
                 </tr>

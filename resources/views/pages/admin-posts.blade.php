@@ -28,7 +28,7 @@
                     <td>
                         <div class="d-flex">
                             <a href="/p/{{ $post->slug }}" class="btn btn-success"><i class="fas fa-external-link"></i></a>
-                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                           <delete-post-button :post="{{$post}}"></delete-post-button>
                         </div>
                     </td>
                 </tr>

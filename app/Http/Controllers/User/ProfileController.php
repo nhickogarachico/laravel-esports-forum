@@ -47,7 +47,7 @@ class ProfileController extends Controller
         if ($user && Gate::allows('edit-profile', $user) || Gate::allows('access-admin', Auth::user())) {
             return view('pages.edit-profile', [
                 'user' => $user,
-                'roles' => $this->role->all()
+
             ]);
         } else {
             return abort(401, "You are not authorized to do this action");
@@ -64,12 +64,8 @@ class ProfileController extends Controller
             return abort(404);
         }
 
-        if (Gate::allows('access-admin', Auth::user()) || Gate::allows('edit-profile', $user)) {
+        if (Gate::allows('edit-profile', $user)) {
             $user->username = $request->validated()['username'];
-            
-            if (array_key_exists('role_id', $request->validated())) {
-                $user->role_id = $request->validated()['role_id'];
-            }
 
             // Upload image
             if ($request->file('avatar')) {
@@ -95,4 +91,5 @@ class ProfileController extends Controller
             ], 401);
         }
     }
+    
 }

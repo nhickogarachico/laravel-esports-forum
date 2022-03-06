@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Admin;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
-class EditProfileRequest extends FormRequest
+class EditTagRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -17,7 +15,7 @@ class EditProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('access-admin',Auth::user());
     }
 
     /**
@@ -28,8 +26,8 @@ class EditProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'username' => ['required', Rule::unique('users')->ignore(Auth::id())],
+            'tag' => 'required',
+            'query_tag' => 'required'
         ];
     }
 }

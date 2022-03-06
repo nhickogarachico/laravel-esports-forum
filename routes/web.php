@@ -48,7 +48,14 @@ Route::get('/admin', [AdminController::class, 'showAdminHomeView']);
 Route::get('/admin/users', [AdminController::class, 'showAdminUserView']);
 Route::get('/admin/tags', [AdminController::class, 'showAdminTagsView']);
 Route::post('/admin/tags', [AdminController::class, 'addTag']);
+Route::put('/admin/tags/{tagId}/edit', [AdminController::class, 'editTag']);
+Route::delete('/admin/tags/{tagId}/delete', [AdminController::class, 'deleteTag']);
 Route::get('/admin/posts', [AdminController::class, 'showAdminPostsView']);
+Route::delete('/admin/posts/{postSlug}/delete', [AdminController::class, 'deletePostAdmin']);
+Route::get('/admin/users/{userId}/edit', [AdminController::class, 'showEditUserView']);
+Route::put('/admin/users/{userId}/edit', [AdminController::class, 'editUserRole']);
+Route::delete('/admin/users/{userId}/delete', [AdminController::class, 'deleteUser']);
+Route::get('/admin/users/{userId}/delete', [AdminController::class, 'showDeleteUserView']);
 
 Route::post('p/{postSlug}/comment/{commentId?}', [CommentController::class, 'comment'])->middleware('auth');
 Route::get('c/{commentId}/reply', [CommentController::class, 'showCommentReplyView'])->middleware('auth');

@@ -29,4 +29,12 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class)->withCount('comments')->orderBy('comments_count', 'DESC')->get();
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($tag) {
+            $tag->posts()->detach();
+        });
+    }
 }

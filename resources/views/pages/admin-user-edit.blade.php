@@ -7,7 +7,7 @@
         <div class="col-6 mx-auto">
 
             <h1>Edit Profile</h1>
-            <form action="/u/{{ $user->username }}/edit" method="POST" enctype="multipart/form-data">
+            <form action="/admin/users/{{$user->id}}/edit" method="POST">
                 @csrf
                 @method('PUT')
                 @if ($errors->any())
@@ -17,19 +17,22 @@
                         </div>
                     @endforeach
                 @endif
-                <div>
-                    <img src="{{ $user->avatar }}" alt="{{ $user->username }} avatar" class="avatar-profile">
-                    <input type="file" class="form-control" name="avatar" />
+                <div class="mb-2">
+                    <p>Username {{ $user->username }}</p>
                 </div>
 
                 <div class="mb-2">
-                    <label for="username">Username</label>
-                    <input id="username" type="text" class="form-control" name="username"
-                        value="{{ old('username', $user->username) }}" />
+                    <label for="role">Role</label>
+                    <select class="form-select" name="role_id" value="{{ $user->role_id }}">
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}" {{ $user->role_id === $role->id ? 'selected' : '' }}>
+                                {{ $role->role }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div>
-                    <a href="/u/{{ $user->username }}" class="btn btn-secondary">Cancel</a>
+                    <a href="/admin/users" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>

@@ -2,7 +2,7 @@
 
 @section('admin-content')
     <h1>Tags</h1>
-  <add-tag-button></add-tag-button>
+    <add-tag-button></add-tag-button>
     <table class="table">
         <thead>
             <tr>
@@ -15,13 +15,13 @@
         <tbody>
             @foreach ($tags as $tag)
                 <tr>
-                    <td>{{$tag->id}}</td>
+                    <td>{{ $tag->id }}</td>
                     <td>{{ $tag->tag }}</td>
-                    <td>{{ $tag->query_tag}}</td>
+                    <td>{{ $tag->query_tag }}</td>
                     <td>
                         <div class="d-flex">
-                            <button class="btn btn-warning"><i class="fas fa-pencil"></i></button>
-                            <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                            <edit-tag-button :tag="{{ $tag }}"></edit-tag-button>
+                            <delete-tag-button :tag="{{ $tag }}"></delete-tag-button>
                         </div>
                     </td>
                 </tr>

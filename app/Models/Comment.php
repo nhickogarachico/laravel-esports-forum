@@ -53,6 +53,10 @@ class Comment extends Model
             foreach ($comment->replies as $reply) {
                 $reply->delete();
             }
+            foreach($comment->activities as $activity)
+            {
+                $activity->delete;
+            }
             foreach ($comment->likes as $like) {
                 $like->delete();
             }

@@ -37,6 +37,15 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC');
     }
+
+    protected function activities() {
+        return $this->hasMany(Activity::class);
+    }
+
+    protected function likes() {
+        return $this->hasMany(Like::class);
+    }
+
     protected function password(): Attribute
     {
         return Attribute::make(
@@ -49,4 +58,26 @@ class User extends Authenticatable
         return $this->where('username', $username)->first();
     }
 
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+
+            foreach($user->activities as $activity) {
+                $activity->delete();
+            }
+            foreach($user->likes as $like) {
+                $like->delete();
+            }
+            foreach($user->posts as $post) {
+                $post->delete();
+            }
+           
+            foreach($user->comments as $comment) {
+                $comment->delete();
+            }
+        });
+    }
 }

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\DeletePostAdminRequest;
+use App\Http\Requests\Admin\DeleteTagRequest;
+use App\Http\Requests\Admin\DeleteUserRequest;
+use App\Http\Requests\Admin\EditTagRequest;
+use App\Http\Requests\Admin\EditUserRoleRequest;
 use App\Http\Requests\Admin\StoreTagRequest;
 use App\Http\Requests\Admin\ViewPasswordRequest;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,15 +27,15 @@ class AdminController extends Controller
     protected $post;
     protected $comment;
     protected $tag;
-    protected $like;
+    protected $role;
 
-    public function __construct(User $user, Post $post, Comment $comment, Tag $tag, Like $like)
+    public function __construct(User $user, Post $post, Comment $comment, Tag $tag, Role $role)
     {
         $this->user = $user;
         $this->post = $post;
         $this->comment = $comment;
         $this->tag = $tag;
-        $this->like = $like;
+        $this->role = $role;
     }
     public function showAdminHomeView()
     {
@@ -88,18 +94,99 @@ class AdminController extends Controller
             ]);
         } else {
             return abort(404);
-        }   
+        }
     }
 
-    public function showEditUserView()
+    public function showEditUserView($userId)
     {
+        $user = $this->user->where('id', $userId)->first();
         if (Gate::allows('access-admin', Auth::user())) {
 
-            return view('pages.admin-edit-user', [
-                'posts' => $this->post->orderBy('created_at', 'DESC')->get(),
+            return view('pages.admin-user-edit', [
+                'user' => $user,
+                'roles' => $this->role->all()
             ]);
         } else {
             return abort(404);
-        } 
+        }
+    }
+
+    public function editUserRole(EditUserRoleRequest $request, $userId)
+    {
+        $user = $this->user->where('id', $userId)->first();
+        if (Gate::allows('access-admin', Auth::user())) {
+            $user->role_id = $request->validated()['role_id'];
+            $user->save();
+            return redirect('/admin/users');
+        } else {
+            return abort(404);
+        }
+    }
+
+    public function showDeleteUserView($userId)
+    {
+        $user = $this->user->where('id', $userId)->first();
+        if (Gate::allows('access-admin', Auth::user())) {
+
+            return view('pages.admin-user-delete', [
+                'user' => $user,
+                'roles' => $this->role->all()
+            ]);
+        } else {
+            return abort(404);
+        }
+    }
+
+    public function deleteUser(DeleteUserRequest $request, $userId)
+    {
+        $user = $this->user->where('id', $userId)->first();
+
+        if (Gate::allows('access-admin', Auth::user())) {
+
+            if (Hash::check($request->validated()['password'], Auth::user()->password)) {
+                $user->delete();
+            } else {
+                return back()->withErrors([
+                    'error' => 'Wrong password'
+                ]);
+            }
+        } else {
+            return abort(404);
+        }
+    }
+
+    public function editTag(EditTagRequest $request, $tagId)
+    {
+        $tag = $this->tag->where('id', $tagId)->first();
+        $tag->tag = $request->validated()['tag'];
+        $tag->query_tag = $request->validated()['query_tag'];
+        $tag->save();
+        return response()->json([
+            'message' => 'Edited tag'
+        ]);
+    }
+
+    public function deleteTag(DeleteTagRequest $request, $tagId)
+    {
+        $tag = $this->tag->where('id', $tagId)->first();
+        if (Hash::check($request->validated()['password'], Auth::user()->password)) {
+            $tag->delete();
+        } else {
+            return response()->json([
+                'message' => 'Wrong password'
+            ], 403);
+        }
+    }
+
+    public function deletePostAdmin(DeletePostAdminRequest $request, $postSlug)
+    {
+        $post = $this->post->where('slug', $postSlug)->first();
+        if (Hash::check($request->validated()['password'], Auth::user()->password)) {
+            $post->delete();
+        } else {
+            return response()->json([
+                'message' => 'Wrong password'
+            ], 403);
+        }
     }
 }
