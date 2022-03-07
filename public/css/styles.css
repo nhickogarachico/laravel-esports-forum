@@ -1,3 +1,113 @@
+:root {
+    --primary: #297373;
+    --primary-dark: #225a5a;
+}
+
+body {
+    padding-top: 80px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+footer {
+    background-color: var(--primary);
+    color: white;
+}
+
+
+/* Header  */
+
+.navbar {
+    background-color: var(--primary);
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 24px;
+}
+
+.navbar-brand:hover {
+    color: white;
+}
+
+
+/* Buttons */
+
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: var(--primary-dark);
+}
+
+.btn-no-bg {
+    background-color: none;
+    color: white;
+}
+
+.btn-no-bg:hover {
+    background-color: white;
+    color: var(--primary);
+}
+
+
+/* Card */
+
+.card-header {
+    background-color: var(--primary);
+    color: white;
+}
+
+
+/* Link */
+
+a,
+.primary-link {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover,
+.primary-link:hover {
+    color: var(--primary);
+}
+
+
+/* Home Link Items */
+
+.link-item {
+    width: 180px;
+}
+
+.form-control:focus,
+.form-control:active,
+.btn:focus,
+.btn:active {
+    border: 1px solid #ced4da;
+    box-shadow: none;
+    outline: 0 none;
+}
+
+
+/* Colors */
+
+.text-white {
+    color: white;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+
+/* Avatars */
+
 .avatar-xs {
     height: 40px;
     width: 40px;
@@ -35,4 +145,24 @@
 
 .like-button:hover {
     color: #0d6efd;
+}
+
+.login-container {
+    max-width: 300px;
+}
+
+@media only screen and (max-width: 768px) {
+    .login-buttons {
+        flex-direction: column;
+    }
+    .btn-no-bg:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+    .home-item-2 {
+        display: none !important;
+    }
+    .login-container {
+        width: 90%;
+    }
 }

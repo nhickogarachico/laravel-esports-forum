@@ -35,7 +35,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->withCount('likes');
+        return $this->hasMany(Comment::class)->withCount('likes')->orderBy('created_at', 'DESC');
     }
 
     public function activities()

@@ -1,21 +1,15 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-md fixed-top p-0">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Esports Forum</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerCollapse"
                 aria-controls="headerCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="fas fa-bars text-white "></span>
             </button>
-            <div class="collapse navbar-collapse" id="headerCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Discussion</a>
-                    </li>
-                </ul>
-                <form action="/search" method="GET" class="d-flex"> 
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                        name="q" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+            <div class="collapse navbar-collapse justify-content-end" id="headerCollapse">
+                <form action="/search" method="GET" class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" />
+                    <button class="btn btn-no-bg" type="submit"><i class="fas fa-search"></i></button>
                 </form>
                 @if (Auth::check())
                     <a href="/u/{{ Auth::user()->username }}/p/new" class="btn btn-primary"><i
@@ -39,8 +33,10 @@
                         </div>
                     </div>
                 @else
-                    <a href="/register" class="btn btn-primary">Register</a>
-                    <a href="/login" class="btn btn-primary">Login</a>
+                    <div class="d-flex login-buttons">
+                        <a href="/register" class="btn btn-no-bg d-block">Register</a>
+                        <a href="/login" class="btn btn-no-bg d-block">Login</a>
+                    </div>
                 @endif
 
             </div>

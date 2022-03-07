@@ -2,52 +2,191 @@
 
 @section('content')
     <div>
-        <h1>Welcome to Esports Forum!</h1>
-        <p>Online community for people who like everything esports. From League of Legend to CS:GO, you can meet and
-            socialize with people that play your game and watch your favorite teams.</p>
         <div class="row">
-            <div class="col-md-3">
-                <x-post-filter></x-post-filter>
+            <h1 class="mb-3">Welcome to Esports Forum!</h1>
+            <div class="mb-3">
+                <a href="/" class="primary-link">Home</a>
             </div>
-
             <div class="col">
-                <h2>Recent Posts</h2>
-                <div class="d-flex">
-                    <div>
-                        <a href="/{{Route::input('tag')}}"><span class="badge bg-secondary">Latest Posts</span> </a>
+                <div class="card mb-3 border-bottom-0">
+                    <div class="card-header p-3">
+                        <p class="mb-0">General Discussions</p>
                     </div>
-                    <div>
-                        <a href="?sort=top"><span class="badge bg-secondary">Top Posts</span> </a>
-                    </div>
-                    <div>
-                        <a href="?sort=replies"><span class="badge bg-secondary">Most Replies</span> </a>
-                    </div>
-                </div>
-                @foreach ($posts as $post)
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <img src="{{ $post->user->avatar }}" alt="{{ $post->user->username }} avatar"
-                                    class="avatar-xs rounded-circle">
+                    @foreach ($tag->tagsByCategory(1, 5) as $tag)
+                        <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
+                            <div class="d-flex align-items-center">
                                 <div>
-                                    <h4 class="mb-1"><a href="/p/{{ $post->slug }}">{{ $post->title }}</a>
-                                    </h4>
-                                    <p class="mb-1"><a
-                                            href="/u/{{ $post->user->username }}">{{ $post->user->username }}</a></p>
-                                    <p>{{ $post->created_at->diffForHumans() }}</p>
-                                    <p><i class="fas fa-thumbs-up"></i>{{ $post->likes()->count() }}</p>
-                                    <p><i class="fas fa-comments"></i>{{ $post->comments()->count() }}</p>
+                                    <i class="fas fa-gamepad text-primary"></i>
                                 </div>
-                                <div>
-                                    @foreach ($post->tags as $tag)
-                                       <a href="/{{$tag->query_tag}}"> <span class="badge bg-primary">{{ $tag->tag }}</span></a>
-                                    @endforeach
+                                <div class="ms-3">
+                                    <a href="/{{$tag->tagCategory->query_string}}/{{$tag->query_tag}}" class="primary-link fw-bold fs-5">{{ $tag->tag }}</a>
+                                    <p>{{ $tag->flavor }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center home-item-2">
+                                <div class="me-5 text-center">
+                                    <p class="fs-3">
+                                        {{ $tag->getTag($tag->query_tag)->posts_count }}</p>
+                                    <p>Posts</p>
+                                </div>
+                                <div class="link-item d-flex">
+                                    @if ($tag->getTag($tag->query_tag)->posts_count > 0)
+                                        <div>
+                                            <a href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">
+                                                <img src="{{ $tag->getTag($tag->query_tag)->posts[0]->user->avatar }}"
+                                                    alt="{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }} avatar"
+                                                    class="avatar-xs rounded-circle me-2">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <p><a href="/p/{{ $tag->getTag($tag->query_tag)->posts[0]->slug }}"
+                                                    class="primary-link">{{ $tag->getTag($tag->query_tag)->posts[0]->title }}</a>
+                                            </p>
+                                            <p>by <a
+                                                    href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}</a>
+                                            </p>
+                                            <p>{{ $tag->getTag($tag->query_tag)->posts[0]->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+                    @endforeach
+
+                </div>
+                <div class="card mb-3 border-bottom-0">
+                    <div class="card-header p-3">
+                        <p class="mb-0">Esports Discussions</p>
                     </div>
-                @endforeach
+                    @foreach ($tag->tagsByCategory(2, 5) as $tag)
+                        <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <i class="fas fa-gamepad text-primary"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <a href="/{{$tag->tagCategory->query_string}}/{{$tag->query_tag}}" class="primary-link fw-bold fs-5">{{ $tag->tag }}</a>
+                                    <p>{{ $tag->flavor }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center home-item-2">
+                                <div class="me-5 text-center">
+                                    <p class="fs-3">
+                                        {{ $tag->getTag($tag->query_tag)->posts_count }}</p>
+                                    <p>Posts</p>
+                                </div>
+                                <div class="link-item d-flex">
+                                    @if ($tag->getTag($tag->query_tag)->posts_count > 0)
+                                        <div>
+                                            <a href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">
+                                                <img src="{{ $tag->getTag($tag->query_tag)->posts[0]->user->avatar }}"
+                                                    alt="{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }} avatar"
+                                                    class="avatar-xs rounded-circle me-2">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <p><a href="/p/{{ $tag->getTag($tag->query_tag)->posts[0]->slug }}"
+                                                    class="primary-link">{{ $tag->getTag($tag->query_tag)->posts[0]->title }}</a>
+                                            </p>
+                                            <p>by <a
+                                                    href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}</a>
+                                            </p>
+                                            <p>{{ $tag->getTag($tag->query_tag)->posts[0]->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    @if ($tag->tagsByCategoryCount(2) > 5)
+                        <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
+                            <a href="/{{$tagCategory->tagCategoryById(2)->query_string}}" class="primary-link">More Esports >></a>
+                        </div>
+                    @endif
+                </div>
+                <div class="card mb-3 border-bottom-0">
+                    <div class="card-header p-3">
+                        <p class="mb-0">Teams Discussions</p>
+                    </div>
+                    @foreach ($tag->tagsByCategory(3, 5) as $tag)
+                        <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <i class="fas fa-gamepad text-primary"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <a href="/{{$tag->tagCategory->query_string}}/{{$tag->query_tag}}" class="primary-link fw-bold fs-5">{{ $tag->tag }}</a>
+                                    <p>{{ $tag->flavor }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center home-item-2">
+                                <div class="me-5 text-center">
+                                    <p class="fs-3">
+                                        {{ $tag->getTag($tag->query_tag)->posts_count }}</p>
+                                    <p>Posts</p>
+                                </div>
+                                <div class="link-item d-flex">
+                                    @if ($tag->getTag($tag->query_tag)->posts_count > 0)
+                                        <div>
+                                            <a href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">
+                                                <img src="{{ $tag->getTag($tag->query_tag)->posts[0]->user->avatar }}"
+                                                    alt="{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }} avatar"
+                                                    class="avatar-xs rounded-circle me-2">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <p><a href="/p/{{ $tag->getTag($tag->query_tag)->posts[0]->slug }}"
+                                                    class="primary-link">{{ $tag->getTag($tag->query_tag)->posts[0]->title }}</a>
+                                            </p>
+                                            <p>by <a
+                                                    href="/u/{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}">{{ $tag->getTag($tag->query_tag)->posts[0]->user->username }}</a>
+                                            </p>
+                                            <p>{{ $tag->getTag($tag->query_tag)->posts[0]->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    @if ($tag->tagsByCategoryCount(3) > 5)
+                        <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
+                            <a href="/{{$tagCategory->tagCategoryById(3)->query_string}}" class="primary-link">More Teams >></a>
+                        </div>
+                    @endif
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header p-3">
+                        <p class="mb-0">Forum Statistics</p>
+                    </div>
+                    <div class="card-body px-5">
+                        <div class="row">
+                            <div class="col-sm text-center mb-2">
+                                <p class="fs-5 fw-bold">{{ $users->count() }}</p>
+                                <p>Total Members</p>
+                            </div>
+                            <div class="col-sm text-center mb-2">
+                                <p class="fs-5 fw-bold">{{ $posts->count() }}</p>
+                                <p>Total Posts</p>
+                            </div>
+                            <div class="col-sm text-center mb-2">
+                                @if ($users->count() > 0)
+                                    <p class="fs-5 fw-bold"><a href="/u/{{ $users[0]->username }}"
+                                            class="primary-link">{{ $users[0]->username }}</a> </p>
+                                @else
+                                    <p class="fs-5 fw-bold">No new member</p>
+                                @endif
+                                <p>Newest Member</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="mt-3">
+            <a href="/" class="primary-link">Home</a>
         </div>
     </div>
 @endsection

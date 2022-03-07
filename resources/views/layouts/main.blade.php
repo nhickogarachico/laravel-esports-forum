@@ -21,6 +21,7 @@
         <main class="container">
             @yield('content')
         </main>
+        <x-footer></x-footer>
     </div>
     <script src="/js/app.js"></script>
     <script src="/js/script.js"></script>

@@ -45,6 +45,7 @@ Route::delete('/c/{commentId}/like', [LikeController::class, 'unlikeComment'])->
 Route::get('/search', [SearchController::class, 'showSearchResults']);
 
 Route::get('/admin', [AdminController::class, 'showAdminHomeView']);
+
 Route::get('/admin/users', [AdminController::class, 'showAdminUserView']);
 Route::get('/admin/tags', [AdminController::class, 'showAdminTagsView']);
 Route::post('/admin/tags', [AdminController::class, 'addTag']);
@@ -61,5 +62,6 @@ Route::post('p/{postSlug}/comment/{commentId?}', [CommentController::class, 'com
 Route::get('c/{commentId}/reply', [CommentController::class, 'showCommentReplyView'])->middleware('auth');
 Route::post('p/{postSlug}/comment', [CommentController::class, 'comment'])->middleware('auth');
 
-Route::get('/{tag?}', [HomeController::class, 'showHomeView'] );
+Route::get('/{queryCategory}/{queryTag?}', [HomeController::class, 'showTagCategoriesView']);
+Route::get('/', [HomeController::class, 'showHomeView'] );
 

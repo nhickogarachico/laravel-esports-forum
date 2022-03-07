@@ -15,9 +15,30 @@ class Tag extends Model
     ];
 
     public $timestamps = false;
+
     public function posts()
     {
         return $this->belongsToMany(Post::class)->orderBy('created_at', 'DESC');
+    }
+
+    public function tagCategory()
+    {
+        return $this->belongsTo(TagCategory::class);
+    }
+
+    public function tagsByCategory($categoryId, $limit = null)
+    {
+        return $this->where('tag_category_id', $categoryId)->limit($limit)->get();
+    }
+
+    public function tagsByCategoryCount($categoryId)
+    {
+        return $this->where('tag_category_id', $categoryId)->count();
+    }
+    
+    public function getTag($queryTag)
+    {
+        return $this->where('query_tag', $queryTag)->withCount('posts')->first();
     }
 
     public function topPosts()
