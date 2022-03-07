@@ -21,7 +21,8 @@
         <span
           v-for="tag in selectedCategoryTags"
           :key="tag.id"
-          class="badge bg-primary ms-2 tag"
+          class="badge ms-2 tag"
+          :style="`background-color: ${tag.tag_color};`"
           @click="removeTag(tag)"
           >{{ tag.tag }} <i class="fas fa-times ms-1"></i
         ></span>

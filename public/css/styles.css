@@ -1,6 +1,12 @@
 :root {
     --primary: #297373;
     --primary-dark: #225a5a;
+    --primary-light: #b8dada;
+    --gray: #ced4da;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -13,6 +19,14 @@ p {
 
 footer {
     background-color: var(--primary);
+    color: white;
+}
+
+
+/* Background */
+
+.bg-primary {
+    background-color: var(--primary) !important;
     color: white;
 }
 
@@ -30,6 +44,10 @@ footer {
 
 .navbar-brand:hover {
     color: white;
+}
+
+.header-collapse-dropdown {
+    display: none !important;
 }
 
 
@@ -85,11 +103,18 @@ a:hover,
     width: 180px;
 }
 
+
+/* Dropdown */
+
+.dropdown-item:active {
+    background-color: var(--primary);
+}
+
 .form-control:focus,
 .form-control:active,
 .btn:focus,
 .btn:active {
-    border: 1px solid #ced4da;
+    border: 1px solid var(--gray);
     box-shadow: none;
     outline: 0 none;
 }
@@ -135,7 +160,7 @@ a:hover,
 /* LIKE BUTTON */
 
 .liked {
-    color: #0d6efd;
+    color: var(--primary);
 }
 
 .like-button {
@@ -144,11 +169,30 @@ a:hover,
 }
 
 .like-button:hover {
-    color: #0d6efd;
+    color: var(--primary);
 }
 
 .login-container {
     max-width: 300px;
+}
+
+
+/* POSTS */
+
+.post-profile-card {
+    width: 350px;
+}
+
+.profile-card-data {
+    font-size: 12px;
+}
+
+.post-content {
+    min-height: 200px;
+}
+
+.post-reply {
+    background-color: var(--primary-light);
 }
 
 @media only screen and (max-width: 768px) {
@@ -164,5 +208,12 @@ a:hover,
     }
     .login-container {
         width: 90%;
+    }
+    .header-collapse-main {
+        display: none !important;
+    }
+    .header-collapse-dropdown {
+        display: flex !important;
+        flex-direction: column;
     }
 }

@@ -5,7 +5,7 @@
         <div class="row">
             <h1 class="mb-3">{{$tagCategory->category}}</h1>
             <div class="mb-3">
-                <a href="/" class="primary-link">Home ></a>
+                <a href="/" class="primary-link">Home</a> >
                 <a href="/{{$tagCategory->query_string}}" class="primary-link">{{$tagCategory->category}}</a>
             </div>
             <div class="col">

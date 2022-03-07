@@ -5,26 +5,38 @@
 @section('content')
     <div class="row">
         <div class="col mx-auto">
-            <a href="/" class="btn btn-primary">Back</a>
-            <div class="d-flex">
-                <div>
-                    <a href="/u/{{ $post->user->username }}"><img src="{{ $post->user->avatar }}"
-                            alt="{{ $post->user->avatar }} avatar" class="rounded-circle avatar-small" /></a>
+            <div class="mb-2">
+                <a href="/" class="primary-link">Home</a>
+                @foreach ($post->tags as $tag)
+                    <div>
+                        ><a href="/{{ $tag->tagCategory->query_string }}" class="primary-link">
+                            {{ $tag->tagCategory->category }}
+                        </a>>
+                        <a href="/{{ $tag->tagCategory->query_string }}/{{ $tag->query_tag }}"
+                            class="primary-link">{{ $tag->tag }}</a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mb-2">
+                <h1 class="mb-0">{{ $post->title }}</h1>
+                <div class="d-flex align-items-center">
+                    <p><a href="/u/{{ $post->user->username }}" class="me-2">{{ $post->user->username }}</a>
+                    </p>
+                    <p>{{ $post->created_at->diffForHumans() }}</p>
                 </div>
                 <div>
-                    <h1>{{ $post->title }}</h1>
-                    <a href="/u/{{ $post->user->username }}">{{ $post->user->username }}</a>
-                    <p>posted {{ $post->created_at->diffForHumans() }}</p>
-                    @if ($post->created_at < $post->updated_at)
-                        <p>edited {{ $post->updated_at->diffForHumans() }}</p>
-                    @endif
-
-                    <p>{{ $post->content }}</p>
                     @foreach ($post->tags as $tag)
-                       <a href="/{{$tag->query_tag}}"><span class="badge bg-primary">{{ $tag->tag }}</span></a> 
+                        <x-tag-badge :tag="$tag"></x-tag-badge>
                     @endforeach
-                    <like-button like-route-parameter="{{ $post->slug }}" :is-liked="{{ $post->likes }}" likeable="p" :initial-likes-count="{{$post->likes_count}}"></like-button>
                 </div>
+            </div>
+            <x-post-container :post="$post"></x-post-container>
+            <div>
+                @foreach ($post->comments as $comment)
+                    <div id="{{ $comment->id }}">
+                        <x-comment-card :comment="$comment"></x-comment-card>
+                    </div>
+                @endforeach
             </div>
             @if (Auth::check())
                 <div class="mb-3">
@@ -35,19 +47,14 @@
                             </div>
                         @endforeach
                     @endif
-                    <label for="content">Add Comment</label>
+                    <p class="mb-2">Replying as {{ Auth::user()->username }}</p>
                     <form action="/p/{{ $post->slug }}/comment" method="POST">
                         @csrf
-                        <textarea name="content" class="form-control"></textarea>
+                        <textarea name="content" class="form-control mb-2" placeholder="Write your reply..."></textarea>
                         <button type="submit" class="btn btn-primary">Comment</button>
                     </form>
                 </div>
             @endif
-            <div>
-                @foreach ($post->comments as $comment)
-                    <x-comment-card :comment="$comment"></x-comment-card>
-                @endforeach
-            </div>
         </div>
     </div>
 @endsection

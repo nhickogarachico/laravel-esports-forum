@@ -6,9 +6,9 @@
             <h1 class="mb-1">{{ $tag->tag }}</h1>
             <p class="mb-3">{{ $tag->flavor }}</p>
             <div class="mb-3">
-                <a href="/" class="primary-link">Home ></a>
+                <a href="/" class="primary-link">Home</a> >
                 <a href="/{{ $tag->tagCategory->query_string }}" class="primary-link">{{ $tag->tagCategory->category }}
-                    ></a>
+                    </a> >
                 <a href="/{{ $tag->tagCategory->query_string }}/{{ $tag->query_tag }}"
                     class="primary-link">{{ $tag->tag }}</a>
             </div>
@@ -21,7 +21,11 @@
                         @foreach ($tag->posts as $post)
                             <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
                                 <div>
-                                    <p><a href="/p/{{ $post->slug }}" class="primary-link fs-5">{{ $post->title }}</a></p>
+                                    <p><a href="/p/{{ $post->slug }}" class="primary-link fs-5">{{ $post->title }}</a>
+                                    </p>
+                                    @foreach ($post->tags as $tag)
+                                    <x-tag-badge :tag="$tag"></x-tag-badge>
+                                    @endforeach
                                     <p>by <a href="/u/{{ $post->user->username }}">{{ $post->user->username }}</a>,
                                         {{ $post->created_at->diffForHumans() }}</p>
                                 </div>
@@ -49,7 +53,7 @@
                                         @else
                                             <div>
                                                 <a href="/u/{{ $post->user->username }}">
-                                                    <img src="{{ $post->user->avatar}}"
+                                                    <img src="{{ $post->user->avatar }}"
                                                         alt="{{ $post->user->username }} avatar"
                                                         class="avatar-xs rounded-circle me-2">
                                                 </a>

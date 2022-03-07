@@ -3,9 +3,9 @@
 @section('title', 'Reply')
 
 @section('content')
-    <a href="/p/{{ $comment->post->slug }}">Back</a>
-    <p>Reply to {{ $comment->user->username }}'s comment</p>
-    <div>{{ $comment->content }}</div>
+    <a href="/p/{{ $comment->post->slug }}" class="mb-3 d-inline-block">Back</a>
+    <p>Reply to {{ $comment->user->username === Auth::user()->username ? 'your' : $comment->user->usernam . '\'s' }} comment: </p>
+    <div class="p-3">{!! nl2br(e($comment->content)) !!}</div>
 
     <div>
         @if ($errors->any())
@@ -15,10 +15,9 @@
                 </div>
             @endforeach
         @endif
-        <label for="content">Reply</label>
         <form action="/p/{{ $comment->post->slug }}/comment/{{$comment->id}}" method="POST">
             @csrf
-            <textarea name="content" class="form-control"></textarea>
+            <textarea name="content" class="form-control mb-2" placeholder="Write your reply..."></textarea>
             <button type="submit" class="btn btn-primary">Reply</button>
         </form>
     </div>

@@ -6478,6 +6478,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     categoryTags: {
@@ -32191,7 +32192,8 @@ var render = function () {
                   "span",
                   {
                     key: tag.id,
-                    staticClass: "badge bg-primary ms-2 tag",
+                    staticClass: "badge ms-2 tag",
+                    style: "background-color: " + tag.tag_color + ";",
                     on: {
                       click: function ($event) {
                         return _vm.removeTag(tag)

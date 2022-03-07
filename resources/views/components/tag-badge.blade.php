@@ -1,0 +1,1 @@
+<span class="badge" style="background-color: {{$tag->tag_color}};"><a href="/{{$tag->tagCategory->query_string}}/{{$tag->query_tag}}" class="text-white">{{ $tag->tag }}</a></span>
