@@ -91,5 +91,19 @@ class ProfileController extends Controller
             ], 401);
         }
     }
+
+    public function showUserCommentsView($username)
+    {
+        $user = $this->user->fetchUserByUsername($username);
+        if($user)
+        {
+            return view('pages.user-replies', [
+                'user' => $user,
+            ]);
+        } else {
+            return abort(404);
+        }
+        
+    }
     
 }

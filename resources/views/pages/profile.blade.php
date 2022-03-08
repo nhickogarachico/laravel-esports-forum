@@ -3,65 +3,111 @@
 @section('title', $user->username . ' | Profile')
 
 @section('profile-content')
-    @if (Auth::check() && Auth::user()->username === $user->username)
-        <h3 class="mb-2">My Activities</h3>
-    @else
-        <h3 class="mb-2">{{ $user->username }}'s Activities</h3>
-    @endif
+    <div class="bg-primary p-2 activity-container-header">
+        @if (Auth::check() && Auth::user()->username === $user->username)
+            <h3 class="fs-5 mb-0">My Activities</h3>
+        @else
+            <h3 class="fs-5 mb-0">{{ $user->username }}'s Activities</h3>
+        @endif
+    </div>
 
 
     @if ($activities->count() > 0)
         @foreach ($activities as $activity)
-            <div class="card mb-3">
-                <div class="card-body">
-                    @switch($activity->activitiable_type)
-                        @case('App\Models\Post')
-                            <p>{{ $activity->user->username }} added a new post.</p>
-                            <p><a href="/p/{{ $activity->activitiable->slug }}">{{ $activity->activitiable->title }}</a>
-                            </p>
-                            @foreach ($activity->activitiable->tags as $tag)
-                                <span class="badge bg-primary">{{ $tag->tag }}</span>
-                            @endforeach
-                            <p>{{ $activity->activitiable->content }}</p>
-                            <p>{{ $activity->activitiable->created_at->diffForHumans() }}</p>
-                        @break
+            <div class="activity-container p-3 border-bottom">
+                @switch($activity->activitiable_type)
+                    @case('App\Models\Post')
+                        <div class="d-flex">
+                            <div><a href="/u/{{ $activity->user->username }}">
+                                    <img src="{{ $activity->user->avatar }}" alt="{{ $activity->user->username }} avatar"
+                                        class="avatar-xs rounded-circle me-2 profile-avatar-xs"></a>
+                            </div>
+                            <div>
+                                <p class="fs-5"><a
+                                        href="/p/{{ $activity->activitiable->slug }}">{{ $activity->activitiable->title }}</a>
+                                </p>
+                                <p><a href="/u/{{ $activity->user->username }}">{{ $activity->user->username }}</a> added a
+                                    new post.</p>
+                                @foreach ($activity->activitiable->tags as $tag)
+                                    <x-tag-badge :tag="$tag"></x-tag-badge>
+                                @endforeach
+                                <p class="my-3">{{ Str::words($activity->activitiable->content, 50, '...') }}</p>
+                                <div class="d-flex">
+                                    <p class="text-secondary">{{ $activity->activitiable->created_at->diffForHumans() }}</p>
+                                    <p class="text-secondary ms-3">{{ $activity->activitiable->comments->count() }} Replies</p>
+                                </div>
+                            </div>
+                        </div>
+                    @break
 
-                        @case('App\Models\Comment')
-                            <p>{{ $activity->user->username }} replied to a post.</p>
-                            <p><a
-                                    href="/p/{{ $activity->activitiable->post->slug }}/#{{ $activity->activitiable->id }}">{{ $activity->activitiable->post->title }}</a>
-                            </p>
-                            @foreach ($activity->activitiable->post->tags as $tag)
-                                <span class="badge bg-primary">{{ $tag->tag }}</span>
-                            @endforeach
-                            <p>{{ $activity->activitiable->content }}</p>
-                            <p>{{ $activity->activitiable->created_at->diffForHumans() }}</p>
-                            <p>{{ $activity->activitiable->replies()->count() > 0 ? $activity->activitiable->replies()->count() . ' replies' : '' }}</p>
-                        @case('App\Models\Like')
-                            @if ($activity->activitiable->likeable_type === 'App\Models\Post')
-                                <p>{{ $activity->user->username }} liked a post.</p>
-                                <p><a
-                                        href="/p/{{ $activity->activitiable->likeable->slug }}">{{ $activity->activitiable->likeable->title }}</a>
+                    @case('App\Models\Comment')
+                        <div class="d-flex">
+                            <div><a href="/u/{{ $activity->user->username }}">
+                                    <img src="{{ $activity->user->avatar }}" alt="{{ $activity->user->username }} avatar"
+                                        class="avatar-xs rounded-circle me-2 profile-avatar-xs"></a>
+                            </div>
+                            <div>
+                                <p class="fs-5"><a
+                                        href="/p/{{ $activity->activitiable->post->slug }}/#{{ $activity->activitiable->id }}">{{ $activity->activitiable->post->title }}</a>
                                 </p>
-                                @foreach ($activity->activitiable->likeable->tags as $tag)
-                                    <span class="badge bg-primary">{{ $tag->tag }}</span>
+                                <p> <a href="/u/{{ $activity->user->username }}">{{ $activity->user->username }} </a> replied
+                                    to a
+                                    post.</p>
+                                @foreach ($activity->activitiable->post->tags as $tag)
+                                    <x-tag-badge :tag="$tag"></x-tag-badge>
                                 @endforeach
-                                <p>{{ $activity->activitiable->likeable->content }}</p>
-                                <p>{{ $activity->activitiable->likeable->created_at->diffForHumans() }}</p>
-                            @elseif($activity->activitiable->likeable_type === 'App\Models\Comment')
-                                <p>{{ $activity->user->username }} liked a reply.</p>
-                                <p><a
-                                        href="/p/{{ $activity->activitiable->likeable->post->slug }}/#{{$activity->activitiable->likeable->id}}">{{ $activity->activitiable->likeable->post->title }}</a>
+                                <p class="my-3">{{ Str::words($activity->activitiable->content, 50, '...') }}</p>
+                                <div class="d-flex">
+                                    <p class="text-secondary">{{ $activity->activitiable->created_at->diffForHumans() }}</p>
+                                    <p class="text-secondary ms-3"><a href="/p/{{$activity->activitiable->post->slug}}/#{{$activity->activitiable->id}}">{{ $activity->activitiable->replies->count() }}
+                                            Replies</a> </p>
+                                </div>
                                 </p>
-                                @foreach ($activity->activitiable->likeable->post->tags as $tag)
-                                    <span class="badge bg-primary">{{ $tag->tag }}</span>
-                                @endforeach
-                                <p>{{ $activity->activitiable->likeable->content }}</p>
-                                <p>{{ $activity->activitiable->likeable->created_at->diffForHumans() }}</p>
-                                <p>{{ $activity->activitiable->likeable->replies()->count() > 0 ? $activity->activitiable->likeable->replies()->count() . ' replies' : '' }}</p>
-                            @endif
-                        @endswitch
-                    </div>
+                            </div>
+                        </div>
+                    @case('App\Models\Like')
+                        @if ($activity->activitiable->likeable_type === 'App\Models\Post')
+                            <div class="d-flex">
+                                <div><a href="/u/{{ $activity->user->username }}">
+                                        <img src="{{ $activity->user->avatar }}" alt="{{ $activity->user->username }} avatar"
+                                            class="avatar-xs rounded-circle me-2 profile-avatar-xs"></a>
+                                </div>
+                                <div>
+                                    <p class="fs-5"><a
+                                            href="/p/{{ $activity->activitiable->likeable->slug }}">{{ $activity->activitiable->likeable->title }}</a>
+                                    </p>
+                                    <p><a href="{{ $activity->user->username }}">{{ $activity->user->username }}</a> liked a
+                                        post.</p>
+
+                                    @foreach ($activity->activitiable->likeable->tags as $tag)
+                                        <x-tag-badge :tag="$tag"></x-tag-badge>
+                                    @endforeach
+                                    <p class="text-secondary mt-3">
+                                        {{ $activity->activitiable->likeable->created_at->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        @elseif($activity->activitiable->likeable_type === 'App\Models\Comment')
+                            <div class="d-flex">
+                                <div><a href="/u/{{ $activity->user->username }}">
+                                        <img src="{{ $activity->user->avatar }}" alt="{{ $activity->user->username }} avatar"
+                                            class="avatar-xs rounded-circle me-2 profile-avatar-xs"></a>
+                                </div>
+                                <div>
+                                    <p class="fs-5"><a
+                                            href="/p/{{ $activity->activitiable->likeable->post->slug }}/#{{ $activity->activitiable->likeable->id }}">{{ $activity->activitiable->likeable->post->title }}</a>
+                                    </p>
+                                    <p><a href="{{ $activity->user->username }}">{{ $activity->user->username }}</a> liked a
+                                        reply.</p>
+                                    @foreach ($activity->activitiable->likeable->post->tags as $tag)
+                                        <x-tag-badge :tag="$tag"></x-tag-badge>
+                                    @endforeach
+                                    <p class="text-secondary mt-3">
+                                        {{ $activity->activitiable->likeable->created_at->diffForHumans() }}</p>
+                                    </p>
+                                </div>
+                            </div>
+                        @endif
+                    @endswitch
                 </div>
             @endforeach
         @else

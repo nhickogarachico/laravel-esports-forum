@@ -25,10 +25,12 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/u/{username}', [ProfileController::class, 'showProfileView'])->name("user-profile");
 Route::get('/u/{username}/edit', [ProfileController::class, 'showEditProfileView'])->middleware('auth');
 Route::put('/u/{username}/edit', [ProfileController::class, 'editUserProfile'])->middleware('auth');
+Route::get('/u/{username}/c', [ProfileController::class, 'showUserCommentsView'])->name('user-replies');
 
 Route::get('/u/{username}/p/new', [PostController::class, 'showNewPostView']);
 Route::post('/u/{username}/p/new', [PostController::class, 'addPost']);
-Route::get('/u/{username}/p', [PostController::class, 'showUserPostsView']);
+Route::get('/u/{username}/p', [PostController::class, 'showUserPostsView'])->name('user-posts');
+
 
 Route::get('/p/{postSlug}', [PostController::class, 'showPostPageView']);
 Route::get('/p/{postSlug}/edit', [PostController::class, 'showEditPostView'])->middleware('auth');

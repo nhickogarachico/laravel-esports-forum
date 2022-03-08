@@ -3,10 +3,10 @@
     <div class="dropdown">
       <button
         class="
-          btn btn-secondary
-          dropdown-toggle
+          btn
           position-relative
           button-in-stretched-link
+          p-0
         "
         type="button"
         :id="`postDropdown${post.id}`"
@@ -16,7 +16,7 @@
         <i class="fas fa-ellipsis"></i>
       </button>
       <ul
-        class="dropdown-menu dropdown-menu-end"
+        class="dropdown-menu dropdown-menu-end me-4"
         :aria-labelledby="`postDropdown${post.id}`"
       >
         <li>
@@ -55,3 +55,9 @@ export default {
   
 };
 </script>
+
+<style scoped>
+  .dropdown-menu {
+    transform: translate3d(25.5px, 19.5px, 0px) !important;
+  }
+</style>

@@ -1,10 +1,10 @@
 <template>
   <div class="confirmation-modal" ref="confirmationModal">
     <div class="confirmation-modal-content mx-auto">
-      <div class="card">
+      <div class="card border-0">
         <div class="card-header d-flex justify-content-end">
           <button class="btn" @click="$emit('close-modal')">
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times text-white"></i>
           </button>
         </div>
         <div class="card-body">
@@ -20,10 +20,10 @@
               You are deleting a post. Please type your username below to
               confirm.
             </p>
-            <p>{{ post.user.username }}</p>
+            <p class="fw-bold mb-2">{{ post.user.username }}</p>
             <input
               type="text"
-              class="form-control"
+              class="form-control mb-2"
               v-model="usernameConfirmation"
             />
             <button
@@ -68,8 +68,8 @@ export default {
           },
         })
         .then((response) => {
-            this.$emit('close-modal');
-            window.location.reload();
+          this.$emit("close-modal");
+          window.location.reload();
         })
         .catch((error) => {
           if (error.response.data.message) {
@@ -97,7 +97,7 @@ export default {
 }
 
 .confirmation-modal-content {
-  margin-top: 25px;
+  margin-top: 125px;
   width: 50%;
 }
 </style>

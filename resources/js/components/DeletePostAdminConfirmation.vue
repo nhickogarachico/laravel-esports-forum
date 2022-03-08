@@ -96,7 +96,7 @@ export default {
 }
 
 .confirmation-modal-content {
-  margin-top: 25px;
+  margin-top: 35px;
   width: 50%;
 }
 </style>

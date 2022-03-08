@@ -20,7 +20,7 @@
     <div class="mb-2">
       <textarea
         name="content"
-        class="form-control"
+        class="form-control post-content-textarea"
         placeholder="Share your thoughts."
         v-model="content"
       ></textarea>
@@ -96,3 +96,9 @@ export default {
   mounted() {},
 };
 </script>
+
+<style scoped>
+.post-content-textarea {
+  height: 100px;
+}
+</style>
