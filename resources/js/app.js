@@ -33,6 +33,7 @@ Vue.component('delete-tag-button', require('./components/DeleteTagButton.vue').d
 Vue.component('delete-tag-confirmation', require('./components/DeleteTagConfirmation.vue').default);
 Vue.component('delete-post-button', require('./components/DeletePostButton.vue').default);
 Vue.component('delete-post-admin-confirmation', require('./components/DeletePostAdminConfirmation.vue').default);
+Vue.component('go-to-page-button', require('./components/GoToPagePaginationButton.vue').default);
 
 
 /**

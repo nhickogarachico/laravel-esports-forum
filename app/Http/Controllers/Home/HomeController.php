@@ -71,14 +71,21 @@ class HomeController extends Controller
         }
     }
 
-    public function showTagCategoriesView($queryCategory, $queryTag = "")
+    public function showTagCategoriesView(Request $request, $queryCategory, $queryTag = "")
     {
         $tagCategory = $this->tagCategory->where('query_string', $queryCategory)->first();
         $tag = $this->tag->where('query_tag', $queryTag)->first();
         if ($tagCategory) {
             if ($tag) {
+                if($request->query('pageNumber') > $tag->posts->count())
+                {
+                    return redirect("/$tagCategory->query_string/$tag->query_tag");
+                }
+
                 return view('pages.tag-posts',[
-                    'tag' => $tag
+                    'tag' => $tag,
+                    'perPage' => 10,
+                    'pageNumber' => $request->query('pageNumber') ? $request->query('pageNumber') : 1
                 ]);
             } else {
                 $tags = $this->tag->tagsByCategory($tagCategory->id);

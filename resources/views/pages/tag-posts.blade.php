@@ -8,7 +8,7 @@
             <div class="mb-3">
                 <a href="/" class="primary-link">Home</a> >
                 <a href="/{{ $tag->tagCategory->query_string }}" class="primary-link">{{ $tag->tagCategory->category }}
-                    </a> >
+                </a> >
                 <a href="/{{ $tag->tagCategory->query_string }}/{{ $tag->query_tag }}"
                     class="primary-link">{{ $tag->tag }}</a>
             </div>
@@ -17,14 +17,17 @@
                     <div class="card-header p-3">
                         <p class="mb-0">Posts</p>
                     </div>
+
                     @if ($tag->posts->count() > 0)
-                        @foreach ($tag->posts as $post)
+                        <x-pagination position="Top" :total-items="$tag->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
+                        </x-pagination>
+                        @foreach ($tag->postsPagination($pageNumber, $perPage) as $post)
                             <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
                                 <div>
                                     <p><a href="/p/{{ $post->slug }}" class="primary-link fs-5">{{ $post->title }}</a>
                                     </p>
                                     @foreach ($post->tags as $tag)
-                                    <x-tag-badge :tag="$tag"></x-tag-badge>
+                                        <x-tag-badge :tag="$tag"></x-tag-badge>
                                     @endforeach
                                     <p>by <a href="/u/{{ $post->user->username }}">{{ $post->user->username }}</a>,
                                         {{ $post->created_at->diffForHumans() }}</p>
@@ -37,17 +40,17 @@
                                     <div class="link-item d-flex">
                                         @if ($post->comments->count() > 0)
                                             <div>
-                                                <a href="/u/{{ $post->comments[0]->user->username }}">
-                                                    <img src="{{ $post->comments[0]->user->avatar }}"
-                                                        alt="{{ $post->comments[0]->user->username }} avatar"
+                                                <a href="/u/{{ $post->latestComment()->user->username }}">
+                                                    <img src="{{ $post->latestComment()->user->avatar }}"
+                                                        alt="{{ $post->latestComment()->user->username }} avatar"
                                                         class="avatar-xs rounded-circle me-2">
                                                 </a>
                                             </div>
                                             <div>
                                                 <p><a
-                                                        href="/u/{{ $post->comments[0]->user->username }}">{{ $post->comments[0]->user->username }}</a>
+                                                        href="/u/{{ $post->latestComment()->user->username }}">{{ $post->latestComment()->user->username }}</a>
                                                 </p>
-                                                <p>{{ $post->comments[0]->created_at->diffForHumans() }}
+                                                <p>{{ $post->latestComment()->created_at->diffForHumans() }}
                                                 </p>
                                             </div>
                                         @else
@@ -70,10 +73,11 @@
                                 </div>
                             </div>
                         @endforeach
+                        <x-pagination position="Bottom" :total-items="$tag->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
+                        </x-pagination>
                     @else
                         <div class="text-center p-5 border-bottom">No posts yet</div>
                     @endif
-
                 </div>
             </div>
         </div>

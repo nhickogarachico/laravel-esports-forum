@@ -18,7 +18,7 @@
                     @endforeach
                 @endif
                 <div>
-                    <img src="{{ $user->avatar }}" alt="{{ $user->username }} avatar" class="avatar-profile">
+                    <img src="{{ $user->avatar }}" alt="{{ $user->username }} avatar" class="avatar-profile mb-2">
                     <input type="file" class="form-control" name="avatar" />
                 </div>
 

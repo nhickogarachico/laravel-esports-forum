@@ -180,7 +180,7 @@ a:hover,
 /* POSTS */
 
 .post-profile-card {
-    width: 350px;
+    /* width: 175px; */
 }
 
 .profile-card-data {
@@ -202,7 +202,7 @@ a:hover,
     cursor: pointer;
 }
 
-.active,
+.active-profile,
 .profile-list-item:hover {
     background-color: var(--primary);
     color: white;
@@ -210,6 +210,34 @@ a:hover,
 
 .activity-container {
     background-color: white;
+}
+
+
+/* PAGINATION */
+
+.page-link,
+.page-link:hover {
+    color: var(--primary);
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary) !important;
+    border-color: var(--primary);
+}
+
+#goToPageButtonTop,
+#goToPageButtonBottom {
+    position: relative;
+}
+
+.goToPageContainerTop,
+.goToPageContainerBottom {
+    display: none;
+    position: absolute;
+    width: 120px;
+    top: 45px;
+    background-color: white;
+    z-index: 999;
 }
 
 @media only screen and (max-width: 768px) {
@@ -238,5 +266,22 @@ a:hover,
     }
     .profile-avatar-xs {
         display: none;
+    }
+    .profile-card-data {
+        display: none;
+    }
+    .post-container {
+        flex-direction: column;
+    }
+    .post-profile-card {
+        display: flex;
+        width: 100%;
+    }
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-left: 1rem;
+        width: 100%;
     }
 }
