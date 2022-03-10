@@ -53,12 +53,26 @@ class User extends Authenticatable
         );
     }
 
+    public function postsPagination($currentPageNumber, $perPage)
+    {
+        $end = $perPage * $currentPageNumber;
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC')->limit($perPage)->offset($end - $perPage)->get();
+    }
+
+
+    public function commentsPagination($currentPageNumber, $perPage)
+    {
+        $end = $perPage * $currentPageNumber;
+        return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC')->limit($perPage)->offset($end - $perPage)->get();
+    }
+
     public function fetchUserByUsername($username)
     {
         return $this->where('username', $username)->first();
     }
 
     
+
     protected static function boot()
     {
         parent::boot();

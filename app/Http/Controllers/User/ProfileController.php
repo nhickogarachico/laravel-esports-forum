@@ -26,13 +26,16 @@ class ProfileController extends Controller
         $this->role = $role;
     }
 
-    public function showProfileView($username)
+    public function showProfileView(Request $request, $username)
     {
         $user = $this->user->fetchUserByUsername($username);
         if ($user) {
             return view('pages.profile', [
                 'user' => $user,
-                'activities' => $this->activity->where('user_id', $user->id)->orderBy('created_at', 'DESC')->get()
+                'perPage' => 10,
+                'pageNumber' => $request->query('pageNumber') ? $request->query('pageNumber') : 1,
+                'activities' => $this->activity,
+                'activitiesCount' => $this->activity->where('user_id', $user->id)->orderBy('created_at', 'DESC')->count()
             ]);
         }
 
@@ -92,13 +95,15 @@ class ProfileController extends Controller
         }
     }
 
-    public function showUserCommentsView($username)
+    public function showUserCommentsView(Request $request, $username)
     {
         $user = $this->user->fetchUserByUsername($username);
         if($user)
         {
             return view('pages.user-replies', [
                 'user' => $user,
+                'perPage' => 10,
+                'pageNumber' => $request->query('pageNumber') ? $request->query('pageNumber') : 1,
             ]);
         } else {
             return abort(404);

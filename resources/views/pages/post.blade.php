@@ -30,16 +30,33 @@
                     @endforeach
                 </div>
             </div>
-            <x-post-container :post="$post"></x-post-container>
+
+            @if ($post->comments->count() > 0)
+                <x-pagination position="Top" :total-items="$post->comments->count()" :per-page="$perPage"
+                    :page-number="$pageNumber">
+                </x-pagination>
+            @endif
+
+            @if ($pageNumber == 1)
+                <x-post-container :post="$post"></x-post-container>
+            @endif
+
             <div>
-                @foreach ($post->comments as $comment)
+                @foreach ($post->commentsPagination($pageNumber, $perPage) as $comment)
                     <div id="{{ $comment->id }}">
                         <x-comment-card :comment="$comment"></x-comment-card>
                     </div>
                 @endforeach
             </div>
+
+            @if ($post->comments->count() > 0)
+                <x-pagination position="Top" :total-items="$post->comments->count()" :per-page="$perPage"
+                    :page-number="$pageNumber">
+                </x-pagination>
+            @endif
+
             @if (Auth::check())
-                <div class="mb-3">
+                <div class="my-3">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
                             <div class="alert alert-danger">

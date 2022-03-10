@@ -52,13 +52,15 @@ class PostController extends Controller
         ]);
     }
 
-    public function showPostPageView($postSlug)
+    public function showPostPageView(Request $request, $postSlug)
     {
         $post = $this->post->where('slug', $postSlug)->withCount('likes')->first();
 
         if ($post) {
             return view('pages.post', [
                 "post" => $post,
+                'perPage' => 10,
+                'pageNumber' => $request->query('pageNumber') ? $request->query('pageNumber') : 1,
                 "user" => $post->user
             ]);
         } else {
@@ -66,11 +68,13 @@ class PostController extends Controller
         }
     }
 
-    public function showUserPostsView($username)
+    public function showUserPostsView(Request $request, $username)
     {
         $user = $this->user->fetchUserByUsername($username);
         return view('pages.user-posts', [
             'user' => $user,
+            'perPage' => 10,
+            'pageNumber' => $request->query('pageNumber') ? $request->query('pageNumber') : 1,
         ]);
     }
 

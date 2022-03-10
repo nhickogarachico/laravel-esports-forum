@@ -17,7 +17,6 @@
                     <div class="card-header p-3">
                         <p class="mb-0">Posts</p>
                     </div>
-
                     @if ($tag->posts->count() > 0)
                         <x-pagination position="Top" :total-items="$tag->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
                         </x-pagination>

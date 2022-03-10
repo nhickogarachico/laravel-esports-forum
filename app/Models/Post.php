@@ -57,6 +57,11 @@ class Post extends Model
         return $this->withCount('comments')->orderBy('comments_count', 'DESC')->orderBy('created_at', 'DESC')->get();
     }
 
+    public function commentsPagination($currentPageNumber, $perPage)
+    {
+        $end = $perPage * $currentPageNumber;
+        return $this->hasMany(Comment::class)->withCount('likes')->limit($perPage)->offset($end - $perPage)->get();
+    }
 
     // Mutator to add some random characters at the end of the slug to make it unique
     protected function slug(): Attribute

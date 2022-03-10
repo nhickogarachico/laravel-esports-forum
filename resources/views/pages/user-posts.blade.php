@@ -16,7 +16,9 @@
     </div>
 
     @if ($user->posts->count() > 0)
-        @foreach ($user->posts as $post)
+        <x-pagination position="Top" :total-items="$user->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
+        </x-pagination>
+        @foreach ($user->postsPagination($pageNumber, $perPage) as $post)
             <div class="activity-container p-3 border-bottom">
                 <div class="d-flex">
                     <div><a href="/u/{{ $post->user->username }}">
@@ -46,7 +48,9 @@
             </div>
         @endforeach
     @else
-        <div class="card-body text-center">No posts yet</div>
+        <div class="card">
+            <div class="card-body text-center">No posts yet</div>
+        </div>
     @endif
 
 

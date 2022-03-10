@@ -6,7 +6,6 @@
             <div class="col-md-3">
                 <x-post-filter></x-post-filter>
             </div>
-
             <div class="col">
                 <h2>Search Results</h2>
                 <p>Showing {{$query ? $posts->count(). 'results for ' . $query . '.' : 'all posts.' }}</p>

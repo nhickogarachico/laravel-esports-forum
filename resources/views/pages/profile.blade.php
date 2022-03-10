@@ -11,9 +11,9 @@
         @endif
     </div>
 
-
-    @if ($activities->count() > 0)
-        @foreach ($activities as $activity)
+    @if ($activitiesCount > 0)
+    <x-pagination position="Top" :total-items="$activitiesCount" :per-page="$perPage" :page-number="$pageNumber"></x-pagination>
+        @foreach ($activities->activitiesPagination($user->id, $pageNumber, $perPage) as $activity)
             <div class="activity-container p-3 border-bottom">
                 @switch($activity->activitiable_type)
                     @case('App\Models\Post')

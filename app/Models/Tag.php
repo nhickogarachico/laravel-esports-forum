@@ -26,6 +26,7 @@ class Tag extends Model
         $end = $perPage * $currentPageNumber;
         return $this->belongsToMany(Post::class)->orderBy('created_at', 'DESC')->limit($perPage)->offset($end - $perPage)->get();
     }
+    
     public function tagCategory()
     {
         return $this->belongsTo(TagCategory::class);

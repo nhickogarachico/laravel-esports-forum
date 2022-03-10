@@ -12,7 +12,9 @@
     </div>
 
     @if ($user->comments->count() > 0)
-        @foreach ($user->comments as $comment)
+        <x-pagination position="Top" :total-items="$user->comments->count()" :per-page="$perPage" :page-number="$pageNumber">
+        </x-pagination>
+        @foreach ($user->commentsPagination($pageNumber, $perPage) as $comment)
             <div class="activity-container p-3 border-bottom">
                 <div class="d-flex">
                     <div><a href="/u/{{ $comment->user->username }}">
@@ -48,7 +50,9 @@
             </div>
         @endforeach
     @else
-        <div class="card-body text-center">No posts yet</div>
+        <div class="card">
+            <div class="card-body text-center">No posts yet</div>
+        </div>
     @endif
 
 

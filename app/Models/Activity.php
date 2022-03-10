@@ -22,4 +22,10 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function activitiesPagination($userId, $currentPageNumber, $perPage)
+    {
+        $end = $perPage * $currentPageNumber;
+        return $this->where('user_id', $userId)->orderBy('created_at', 'DESC')->limit($perPage)->offset($end - $perPage)->get();
+    }
 }

@@ -45,6 +45,7 @@ class Comment extends Model
     {
         return $this->morphMany(Activity::class, 'activitiable');
     }
+    
     protected static function boot()
     {
         parent::boot();
