@@ -1,5 +1,5 @@
-<nav class="border-bottom">
-    <ul class="pagination">
+<nav>
+    <ul class="pagination mb-0">
         <li class="page-item {{ $pageNumber == 1 ? 'd-none' : '' }}"><a class="page-link"
                 href="?pageNumber=1">&lt;&lt;</a></li>
         <li class="page-item {{ $pageNumber <= 1 ? 'disabled' : '' }}"><a class="page-link"

@@ -37,11 +37,12 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->withCount('likes');
     }
-
+    
     public function latestComment()
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC')->first();
     }
+    
     public function activities()
     {
         return $this->morphMany(Activity::class, 'activitiable');

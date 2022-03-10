@@ -9,6 +9,7 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $orderBy;
     protected $fillable = [
         'tag',
         'query_tag'
@@ -21,11 +22,53 @@ class Tag extends Model
         return $this->belongsToMany(Post::class)->orderBy('created_at', 'DESC');
     }
 
-    public function postsPagination($currentPageNumber, $perPage)
+    public function postsPagination($currentPageNumber, $perPage, $sortby, $sortdirection)
     {
         $end = $perPage * $currentPageNumber;
-        return $this->belongsToMany(Post::class)->orderBy('created_at', 'DESC')->limit($perPage)->offset($end - $perPage)->get();
+        switch ($sortby) {
+            case "latest":
+                $this->orderBy = "latest_comment";
+                break;
+            case "title":
+                $this->orderBy = "title";
+                break;
+            case "recent":
+                $this->orderBy = "created_at";
+                break;
+            case "likes":
+                $this->orderBy = "likes_count";
+                break;
+            case "replies":
+                $this->orderBy = "comments_count";
+                break;
+            default:
+                $this->orderBy = "created_at";
+        }
+
+        switch ($sortdirection) {
+            case null:
+                $sortdirection = "desc";
+                break;
+            case "asc":
+                break;
+            case "desc":
+                break;
+            default:
+                $sortdirection = "desc";
+        }
+
+        return $this->belongsToMany(Post::class)
+        ->addSelect(['latest_comment' => Comment::select('created_at')
+            ->whereColumn('post_id', 'posts.id')
+            ->orderBy('created_at', $sortdirection)
+            ->limit(1)])
+        ->withCount('likes')
+        ->withCount('comments')
+        ->orderBy($this->orderBy, $sortdirection)
+        ->limit($perPage)
+        ->offset($end - $perPage)->get();
     }
+
     
     public function tagCategory()
     {
@@ -41,7 +84,7 @@ class Tag extends Model
     {
         return $this->where('tag_category_id', $categoryId)->count();
     }
-    
+
     public function getTag($queryTag)
     {
         return $this->where('query_tag', $queryTag)->withCount('posts')->first();

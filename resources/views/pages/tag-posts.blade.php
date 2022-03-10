@@ -18,9 +18,13 @@
                         <p class="mb-0">Posts</p>
                     </div>
                     @if ($tag->posts->count() > 0)
-                        <x-pagination position="Top" :total-items="$tag->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
-                        </x-pagination>
-                        @foreach ($tag->postsPagination($pageNumber, $perPage) as $post)
+                        <div class="d-flex justify-content-between align-items-center p-2 pagination-sort-container">
+                            <x-pagination position="Top" :total-items="$tag->posts->count()" :per-page="$perPage"
+                                :page-number="$pageNumber">
+                            </x-pagination>
+                            <x-sort-menu></x-sort-menu>
+                        </div>
+                        @foreach ($tag->postsPagination($pageNumber, $perPage, Request::get('sortby'), Request::get('sortdirection')) as $post)
                             <div class="card-body d-flex justify-content-between py-2 px-3 border-bottom">
                                 <div>
                                     <p><a href="/p/{{ $post->slug }}" class="primary-link fs-5">{{ $post->title }}</a>
@@ -72,8 +76,11 @@
                                 </div>
                             </div>
                         @endforeach
-                        <x-pagination position="Bottom" :total-items="$tag->posts->count()" :per-page="$perPage" :page-number="$pageNumber">
-                        </x-pagination>
+                        <div class="p-2 border-bottom">
+                            <x-pagination position="Bottom" :total-items="$tag->posts->count()" :per-page="$perPage"
+                                :page-number="$pageNumber">
+                            </x-pagination>
+                        </div>
                     @else
                         <div class="text-center p-5 border-bottom">No posts yet</div>
                     @endif
